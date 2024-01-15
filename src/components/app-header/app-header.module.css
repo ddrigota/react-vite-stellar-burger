@@ -26,10 +26,12 @@
 }
 
 .list_left {
+  composes: list;
   justify-self: start;
 }
 
 .list_right {
+  composes: list;
   justify-self: end;
 }
 
@@ -50,7 +52,7 @@
   color: inherit;
 }
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   .nav {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
@@ -63,4 +65,4 @@
   .list_right {
     justify-self: center;
   }
-}
+} */

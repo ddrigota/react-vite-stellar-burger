@@ -5,7 +5,7 @@ const AppHeader = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <ul className={`${styles.list} ${styles.list_left}`}>
+        <ul className={styles.list_left}>
           <li className={styles.list__item}>
             <a className={styles.link} href="/">
               <BurgerIcon type="primary" />
@@ -20,7 +20,7 @@ const AppHeader = () => {
           </li>
         </ul>
         <Logo />
-        <ul className={`${styles.list} ${styles.list_right}`}>
+        <ul className={styles.list_right}>
           <li className={styles.list__item}>
             <a className={styles.link} href="/">
               <ProfileIcon type="secondary" />
