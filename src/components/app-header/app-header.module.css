@@ -4,6 +4,7 @@
   align-items: center;
   background: #1c1c21;
   width: 100%;
+  min-width: 425px;
 }
 
 .nav {
@@ -46,4 +47,19 @@
   gap: 8px;
   text-decoration: none;
   color: inherit;
+}
+
+@media (max-width: 1000px) {
+  .nav {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .list_left {
+    justify-self: center;
+    grid-row: 2;
+  }
+  .list_right {
+    justify-self: center;
+  }
 }

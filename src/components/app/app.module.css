@@ -5,4 +5,5 @@
   height: 100dvh;
   background-color: #131316;
   color: #f2f2f3;
+  min-width: 425px;
 }
