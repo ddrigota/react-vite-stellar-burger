@@ -1,0 +1,7 @@
+.ingredients__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  gap: 24px;
+  padding: 24px 16px 40px;
+}
