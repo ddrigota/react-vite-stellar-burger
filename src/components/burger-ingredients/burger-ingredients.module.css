@@ -1,0 +1,23 @@
+.container {
+  height: 80vh;
+}
+
+.heading {
+  margin-block-end: 20px;
+}
+
+.ingredients__container {
+  margin-block-start: 40px;
+  overflow-y: auto;
+  height: 60vh;
+}
+
+.ingredients__container::-webkit-scrollbar {
+  width: 8px;
+}
+.ingredients__container::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+.ingredients__container::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
