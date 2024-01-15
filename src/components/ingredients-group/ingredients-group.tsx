@@ -1,21 +1,27 @@
 import styles from "./ingredients-group.module.css";
 import Ingredient from "../ingredient/ingredient";
 
-interface Props {
-  title: string;
+interface IngredientProps {
+  image: string;
+  price: number;
+  name: string;
 }
 
-const IngredientsGroup = ({ title }: Props) => {
+interface Props {
+  title: string;
+  ingredients: IngredientProps[];
+}
+
+const IngredientsGroup = ({ title, ingredients }: Props) => {
   return (
     <div className={`${styles.ingredients__group}`}>
       <h2 className={`${styles.ingredients__group_heading} text text_type_main-medium`}>{title}</h2>
       <ul className={`${styles.ingredients__list}`}>
-        <li className={`${styles.ingredients__list_item}`}>
-          <Ingredient image="https://code.s3.yandex.net/react/code/sauce-02.png" price={20} name="Краторная булка" />
-        </li>
-        <li className={`${styles.ingredients__list_item}`}>
-          <Ingredient image="https://code.s3.yandex.net/react/code/sauce-02.png" price={20} name="Краторная булка" />
-        </li>
+        {ingredients.map((ingredient, index) => (
+          <li key={index} className={`${styles.ingredients__list_item}`}>
+            <Ingredient image={ingredient.image} price={ingredient.price} name={ingredient.name} />
+          </li>
+        ))}
       </ul>
     </div>
   );

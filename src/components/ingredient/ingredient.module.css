@@ -5,6 +5,12 @@
   gap: 8px;
   position: relative;
   padding: 0 16px 40px;
+  border-radius: 8px;
+}
+
+.card:hover {
+  cursor: pointer;
+  background-color: #1c1c21;
 }
 
 .card__image {

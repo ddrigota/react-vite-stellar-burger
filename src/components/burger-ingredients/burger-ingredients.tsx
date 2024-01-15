@@ -3,8 +3,25 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "../ingredients-group/ingredients-group";
 
-const BurgerIngredients = () => {
+interface Ingredient {
+  _id: string;
+  name: string;
+  type: string;
+  price: number;
+  image: string;
+  __v: number;
+}
+
+interface Props {
+  data: Ingredient[];
+}
+
+const BurgerIngredients = ({ data }: Props) => {
   const [currentTab, setCurrentTab] = useState("buns");
+
+  const buns = data.filter(item => item.type === "bun");
+  const sauces = data.filter(item => item.type === "sauce");
+  const mains = data.filter(item => item.type === "main");
 
   return (
     <div className={styles.container}>
@@ -21,9 +38,9 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
       <div className={`${styles.ingredients__container}`}>
-        <IngredientsGroup title="Булки" />
-        {/* <IngredientsGroup title="Соусы" />
-        <IngredientsGroup title="Начинки" /> */}
+        <IngredientsGroup title="Булки" ingredients={buns} />
+        <IngredientsGroup title="Соусы" ingredients={sauces} />
+        <IngredientsGroup title="Начинки" ingredients={mains} />
       </div>
     </div>
   );
