@@ -9,13 +9,13 @@ const AppHeader = () => {
           <li className={styles.list__item}>
             <a className={styles.link} href="/">
               <BurgerIcon type="primary" />
-              <span className={styles.linkText + "text text_type_main-default"}>Конструктор</span>
+              <span className={`${styles.link__text} text text_type_main-default`}>Конструктор</span>
             </a>
           </li>
           <li className={styles.list__item}>
             <a className={styles.link} href="/">
               <ListIcon type="secondary" />
-              <span className={styles.linkText + "text text_type_main-default"}>Лента заказов</span>
+              <span className={`${styles.link__text} text text_type_main-default`}>Лента заказов</span>
             </a>
           </li>
         </ul>
@@ -24,7 +24,7 @@ const AppHeader = () => {
           <li className={styles.list__item}>
             <a className={styles.link} href="/">
               <ProfileIcon type="secondary" />
-              <span className={styles.linkText + "text text_type_main-default"}>Личный кабинет</span>
+              <span className={`${styles.link__text} text text_type_main-default`}>Личный кабинет</span>
             </a>
           </li>
         </ul>
