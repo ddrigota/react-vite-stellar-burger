@@ -6,9 +6,10 @@ import { IngredientType } from "../../utils/types";
 
 interface Props {
   data: IngredientType[];
+  openIngredientDetails: (ingredient: IngredientType | null) => void;
 }
 
-const BurgerIngredients = ({ data }: Props) => {
+const BurgerIngredients = ({ data, openIngredientDetails }: Props) => {
   const [currentTab, setCurrentTab] = useState("buns");
 
   const buns = data.filter(item => item.type === "bun");
@@ -30,9 +31,9 @@ const BurgerIngredients = ({ data }: Props) => {
         </Tab>
       </div>
       <div className={`${styles.ingredients__container}`}>
-        <IngredientsGroup title="Булки" ingredients={buns} />
-        <IngredientsGroup title="Соусы" ingredients={sauces} />
-        <IngredientsGroup title="Начинки" ingredients={mains} />
+        <IngredientsGroup title="Булки" ingredients={buns} openIngredientDetails={openIngredientDetails} />
+        <IngredientsGroup title="Соусы" ingredients={sauces} openIngredientDetails={openIngredientDetails} />
+        <IngredientsGroup title="Начинки" ingredients={mains} openIngredientDetails={openIngredientDetails} />
       </div>
     </div>
   );
