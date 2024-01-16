@@ -4,12 +4,19 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
+import { IngredientType } from "../../utils/types";
+import OrderDetails from "../order-details/order-details";
+
+interface IngredientDetails {
+  isOpen: boolean;
+  ingredient: IngredientType | null;
+}
 
 function App() {
   const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
-
   const [data, setData] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [orderDetails, setOrderDetails] = useState({ isOpen: false });
+  const [ingredientDetails, setIngredientDetails] = useState<IngredientDetails>({ isOpen: false, ingredient: null });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +36,19 @@ function App() {
     fetchData();
   }, []);
 
+  const openOrderDetails = () => {
+    setOrderDetails({ isOpen: true });
+  };
+
+  const openIngredientDetails = (ingredient: IngredientType | null) => {
+    setIngredientDetails({ isOpen: true, ingredient });
+  };
+
+  const closeModal = () => {
+    setOrderDetails({ isOpen: false });
+    setIngredientDetails({ isOpen: false, ingredient: null });
+  };
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -37,9 +57,15 @@ function App() {
           <BurgerIngredients data={data} />
         </section>
         <section className={styles.section}>
-          <BurgerConstructor />
+          <BurgerConstructor openOrderDetails={openOrderDetails} />
         </section>
       </main>
+
+      {orderDetails.isOpen && (
+        <Modal closeModal={closeModal} name="">
+          <OrderDetails />
+        </Modal>
+      )}
     </div>
   );
 }

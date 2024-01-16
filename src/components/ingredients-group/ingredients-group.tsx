@@ -1,16 +1,10 @@
 import styles from "./ingredients-group.module.css";
 import Ingredient from "../ingredient/ingredient";
-
-interface IngredientProps {
-  image: string;
-  price: number;
-  name: string;
-  _id: string;
-}
+import { IngredientType } from "../../utils/types";
 
 interface Props {
   title: string;
-  ingredients: IngredientProps[];
+  ingredients: IngredientType[];
 }
 
 const IngredientsGroup = ({ title, ingredients }: Props) => {

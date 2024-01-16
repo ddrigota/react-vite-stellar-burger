@@ -1,7 +1,11 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 
-const BurgerConstructor = () => {
+interface Props {
+  openOrderDetails: () => void;
+}
+
+const BurgerConstructor = ({ openOrderDetails }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.burger_container}>
@@ -55,7 +59,7 @@ const BurgerConstructor = () => {
           <span className="text text_type_digits-medium">610</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" htmlType="button" id="order_button">
+        <Button type="primary" size="large" htmlType="button" id="order_button" onClick={openOrderDetails}>
           Оформить заказ
         </Button>
       </div>

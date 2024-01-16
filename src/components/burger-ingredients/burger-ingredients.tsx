@@ -2,18 +2,10 @@ import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "../ingredients-group/ingredients-group";
-
-interface Ingredient {
-  _id: string;
-  name: string;
-  type: string;
-  price: number;
-  image: string;
-  __v: number;
-}
+import { IngredientType } from "../../utils/types";
 
 interface Props {
-  data: Ingredient[];
+  data: IngredientType[];
 }
 
 const BurgerIngredients = ({ data }: Props) => {
