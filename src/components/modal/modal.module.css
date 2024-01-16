@@ -1,0 +1,28 @@
+.modal {
+  border-radius: 40px;
+  border: none;
+  background-color: #1c1c21;
+  color: #f2f2f3;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 720px;
+  padding: 40px;
+}
+
+.close_button {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal_heading {
+  margin: 0;
+}
+
+modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}

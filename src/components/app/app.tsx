@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import Modal from "../modal/modal";
 
 function App() {
   const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
 
   const [data, setData] = useState([]);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +40,7 @@ function App() {
           <BurgerConstructor />
         </section>
       </main>
+      <Modal name="Вася">ghbdtn</Modal>
     </div>
   );
 }
