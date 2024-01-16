@@ -58,7 +58,7 @@ function App() {
           <BurgerIngredients data={data} openIngredientDetails={openIngredientDetails} />
         </section>
         <section className={styles.section}>
-          <BurgerConstructor openOrderDetails={openOrderDetails} />
+          <BurgerConstructor ingredients={data} openOrderDetails={openOrderDetails} />
         </section>
       </main>
 

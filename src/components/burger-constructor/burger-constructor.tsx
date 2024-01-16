@@ -1,56 +1,28 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
+import { IngredientType } from "../../utils/types";
 
 interface Props {
   openOrderDetails: () => void;
+  ingredients: IngredientType[];
 }
 
-const BurgerConstructor = ({ openOrderDetails }: Props) => {
+const BurgerConstructor = ({ openOrderDetails, ingredients }: Props) => {
+  const mains = ingredients.filter(ingredient => ingredient.type === "main");
+
   return (
     <div className={styles.container}>
       <div className={styles.burger_container}>
         <ConstructorElement type="top" isLocked={true} text="Краторная булка N-200i (верх)" price={20} thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"} />
         <ul className={`${styles.сonstructor_list}`}>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
-          <li className={`${styles.сonstructor_item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement isLocked={false} text="Говяжий метеорит (отбивная)" price={200} thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"} />
-          </li>
+          {mains.map(ingredient => {
+            return (
+              <li className={`${styles.сonstructor_item}`}>
+                <DragIcon type="primary" />
+                <ConstructorElement isLocked={false} text={ingredient.name} price={ingredient.price} thumbnail={ingredient.image} />
+              </li>
+            );
+          })}
         </ul>
         <ConstructorElement type="bottom" isLocked={true} text="Краторная булка N-200i (низ)" price={20} thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"} />
       </div>
