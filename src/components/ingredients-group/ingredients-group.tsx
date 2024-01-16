@@ -5,6 +5,7 @@ interface IngredientProps {
   image: string;
   price: number;
   name: string;
+  _id: string;
 }
 
 interface Props {
@@ -17,8 +18,8 @@ const IngredientsGroup = ({ title, ingredients }: Props) => {
     <div className={`${styles.ingredients__group}`}>
       <h2 className={`${styles.ingredients__group_heading} text text_type_main-medium`}>{title}</h2>
       <ul className={`${styles.ingredients__list}`}>
-        {ingredients.map((ingredient, index) => (
-          <li key={index} className={`${styles.ingredients__list_item}`}>
+        {ingredients.map(ingredient => (
+          <li key={ingredient._id} className={`${styles.ingredients__list_item}`}>
             <Ingredient image={ingredient.image} price={ingredient.price} name={ingredient.name} />
           </li>
         ))}

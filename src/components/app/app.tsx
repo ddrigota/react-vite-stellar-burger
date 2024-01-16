@@ -40,7 +40,6 @@ function App() {
           <BurgerConstructor />
         </section>
       </main>
-      <Modal name="Вася">ghbdtn</Modal>
     </div>
   );
 }

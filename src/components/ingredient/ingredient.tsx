@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./ingredient.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
