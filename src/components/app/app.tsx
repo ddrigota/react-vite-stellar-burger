@@ -55,7 +55,7 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <section className={styles.section}>
-          <BurgerIngredients data={data} openIngredientDetails={openIngredientDetails} />
+          <BurgerIngredients ingredients={data} openIngredientDetails={openIngredientDetails} />
         </section>
         <section className={styles.section}>
           <BurgerConstructor ingredients={data} openOrderDetails={openOrderDetails} />

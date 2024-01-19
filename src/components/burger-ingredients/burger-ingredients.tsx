@@ -5,16 +5,16 @@ import IngredientsGroup from "../ingredients-group/ingredients-group";
 import { IngredientType } from "../../utils/types";
 
 interface Props {
-  data: IngredientType[];
+  ingredients: IngredientType[];
   openIngredientDetails: (ingredient: IngredientType | null) => void;
 }
 
-const BurgerIngredients = ({ data, openIngredientDetails }: Props) => {
+const BurgerIngredients = ({ ingredients, openIngredientDetails }: Props) => {
   const [currentTab, setCurrentTab] = useState("buns");
 
-  const buns = data.filter(item => item.type === "bun");
-  const sauces = data.filter(item => item.type === "sauce");
-  const mains = data.filter(item => item.type === "main");
+  const buns = ingredients.filter(item => item.type === "bun");
+  const sauces = ingredients.filter(item => item.type === "sauce");
+  const mains = ingredients.filter(item => item.type === "main");
 
   return (
     <div className={styles.container}>
