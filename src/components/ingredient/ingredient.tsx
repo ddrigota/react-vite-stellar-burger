@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./ingredient.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
 interface Props {
   image: string;
@@ -23,12 +22,6 @@ const Ingredient = ({ image, price, name }: Props) => {
       {count > 0 && <Counter size="default" count={count} />}
     </article>
   );
-};
-
-Ingredient.propTypes = {
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
 };
 
 export default Ingredient;

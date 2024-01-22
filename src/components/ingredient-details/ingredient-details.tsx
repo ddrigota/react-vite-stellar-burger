@@ -1,6 +1,5 @@
 import styles from "./ingredient-details.module.css";
 import { IngredientType } from "../../utils/types";
-import PropTypes from "prop-types";
 
 interface Props {
   ingredient: IngredientType;
@@ -31,22 +30,6 @@ const IngredientDetails = ({ ingredient }: Props) => {
       </div>
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-  }),
 };
 
 export default IngredientDetails;

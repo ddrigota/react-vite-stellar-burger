@@ -1,7 +1,6 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { IngredientType } from "../../utils/types";
-import PropTypes from "prop-types";
 
 interface Props {
   openOrderDetails: () => void;
@@ -40,22 +39,4 @@ const BurgerConstructor = ({ openOrderDetails, ingredients }: Props) => {
   );
 };
 
-BurgerConstructor.propTypes = {
-  openOrderDetails: PropTypes.func.isRequired,
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      _id: PropTypes.string.isRequired,
-    })
-  ),
-};
 export default BurgerConstructor;
