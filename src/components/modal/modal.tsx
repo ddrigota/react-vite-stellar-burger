@@ -23,7 +23,7 @@ const Modal = ({ children, name, closeModal }: Props) => {
     return () => {
       document.removeEventListener("keydown", handleEsc);
     };
-  });
+  }, []);
 
   return createPortal(
     <>

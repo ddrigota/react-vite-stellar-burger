@@ -19,7 +19,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }: Props) => {
   return (
     <div className={styles.container}>
       <h1 className={`${styles.heading} text text_type_main-large`}>Соберите бургер</h1>
-      <div style={{ display: "flex" }}>
+      <div className={styles.tab__container}>
         <Tab value="buns" active={currentTab === "buns"} onClick={setCurrentTab}>
           Булки
         </Tab>

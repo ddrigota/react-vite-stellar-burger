@@ -6,6 +6,10 @@
   margin-block-end: 20px;
 }
 
+.tab__container {
+  display: flex;
+}
+
 .ingredients__container {
   margin-block-start: 40px;
   overflow-y: auto;
