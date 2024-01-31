@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import ingredientsReducer from "./ingredientsSlice";
+import { rootReducer } from "./rootReducer";
 
 export const store = configureStore({
-  reducer: {
-    ingredients: ingredientsReducer,
-  },
+  reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

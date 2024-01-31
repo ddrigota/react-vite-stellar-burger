@@ -14,28 +14,26 @@ interface IngredientDetailsType {
 }
 
 function App() {
-  const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
-  const [data, setData] = useState([]);
   const [orderDetails, setOrderDetails] = useState({ isOpen: false });
   const [ingredientDetails, setIngredientDetails] = useState<IngredientDetailsType>({ isOpen: false, ingredient: null });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(dataUrl);
-        if (!res.ok) {
-          throw new Error(`Ошибка: ${res.status}`);
-        }
-        const result = await res.json();
-        setData(result.data);
-        // console.log(result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await fetch(dataUrl);
+  //       if (!res.ok) {
+  //         throw new Error(`Ошибка: ${res.status}`);
+  //       }
+  //       const result = await res.json();
+  //       setData(result.data);
+  //       // console.log(result.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const openOrderDetails = () => {
     setOrderDetails({ isOpen: true });
@@ -55,21 +53,25 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <section className={styles.section}>
-          <BurgerIngredients ingredients={data} openIngredientDetails={openIngredientDetails} />
+          <BurgerIngredients openIngredientDetails={openIngredientDetails} />
         </section>
         <section className={styles.section}>
-          <BurgerConstructor ingredients={data} openOrderDetails={openOrderDetails} />
+          <BurgerConstructor openOrderDetails={openOrderDetails} />
         </section>
       </main>
 
       {orderDetails.isOpen && (
-        <Modal closeModal={closeModal} name="">
+        <Modal
+          closeModal={closeModal}
+          name="">
           <OrderDetails />
         </Modal>
       )}
 
       {ingredientDetails.isOpen && ingredientDetails.ingredient && (
-        <Modal closeModal={closeModal} name="Детали Ингридиента">
+        <Modal
+          closeModal={closeModal}
+          name="Детали Ингридиента">
           <IngredientDetails ingredient={ingredientDetails.ingredient} />
         </Modal>
       )}

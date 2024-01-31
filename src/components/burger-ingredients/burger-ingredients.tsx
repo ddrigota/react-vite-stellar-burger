@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./burger-ingredients.module.css";
+import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+
+import { fetchIngredients } from "../../services/ingredientsSlice";
+import { RootState } from "../../services/store";
 import IngredientsGroup from "../ingredients-group/ingredients-group";
 import { IngredientType } from "../../utils/types";
+import styles from "./burger-ingredients.module.css";
 
 interface Props {
-  ingredients: IngredientType[];
   openIngredientDetails: (ingredient: IngredientType | null) => void;
 }
 
-const BurgerIngredients = ({ ingredients, openIngredientDetails }: Props) => {
+const BurgerIngredients = ({ openIngredientDetails }: Props) => {
   const [currentTab, setCurrentTab] = useState("buns");
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state: RootState) => state.burgerIngredients.ingredients);
 
   const buns = ingredients.filter(item => item.type === "bun");
   const sauces = ingredients.filter(item => item.type === "sauce");
@@ -20,6 +25,12 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }: Props) => {
   const saucesRef = useRef<HTMLDivElement>(null);
   const mainsRef = useRef<HTMLDivElement>(null);
 
+  // получаем ингредиенты
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
+  // слушаем скролл и меняем таб в зависимости от того, какая группа ингредиентов находится в зоне видимости
   useEffect(() => {
     const bunsNode = bunsRef.current;
     const saucesNode = saucesRef.current;
