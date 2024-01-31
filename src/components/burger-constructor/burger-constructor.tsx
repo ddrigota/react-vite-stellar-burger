@@ -1,50 +1,65 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../services/store";
+import { removeIngredient } from "../../services/constructorSlice";
 
 interface Props {
   openOrderDetails: () => void;
 }
 
 const BurgerConstructor = ({ openOrderDetails }: Props) => {
-  const ingredients = useSelector((state: RootState) => state.burgerIngredients.ingredients);
-  const mains = ingredients.filter(ingredient => ingredient.type === "main");
+  const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
+  const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
       <div className={styles.burger_container}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={20}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {bun && (
+          <>
+            <div className={styles.bun}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${bun.name} (верх)`}
+                price={bun.price || 0}
+                thumbnail={bun.image}
+              />
+            </div>
+          </>
+        )}
         <ul className={`${styles.сonstructor_list}`}>
-          {mains.map(ingredient => {
+          {ingredients.map((ingredient, index) => {
             return (
               <li
                 className={`${styles.сonstructor_item}`}
-                key={ingredient._id}>
+                key={`${ingredient._id}-${index}`}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   isLocked={false}
                   text={ingredient.name}
                   price={ingredient.price}
                   thumbnail={ingredient.image}
+                  handleClose={() => dispatch(removeIngredient(ingredient._id))}
                 />
               </li>
             );
           })}
         </ul>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={20}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {bun && (
+          <>
+            <div className={styles.bun}>
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={`${bun.name} (низ)`}
+                price={bun.price || 0}
+                thumbnail={bun.image}
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className={styles.price_container}>
         <div className={styles.total_price}>

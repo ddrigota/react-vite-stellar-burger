@@ -17,24 +17,6 @@ function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpen: false });
   const [ingredientDetails, setIngredientDetails] = useState<IngredientDetailsType>({ isOpen: false, ingredient: null });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(dataUrl);
-  //       if (!res.ok) {
-  //         throw new Error(`Ошибка: ${res.status}`);
-  //       }
-  //       const result = await res.json();
-  //       setData(result.data);
-  //       // console.log(result.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   const openOrderDetails = () => {
     setOrderDetails({ isOpen: true });
   };

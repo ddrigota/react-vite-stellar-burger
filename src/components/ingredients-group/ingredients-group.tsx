@@ -22,12 +22,9 @@ const IngredientsGroup = React.forwardRef<HTMLDivElement, Props>(({ title, ingre
           <li
             key={ingredient._id}
             className={`${styles.ingredients__list_item}`}
-            onClick={() => openIngredientDetails(ingredient)}>
-            <Ingredient
-              image={ingredient.image}
-              price={ingredient.price}
-              name={ingredient.name}
-            />
+            // onClick={() => openIngredientDetails(ingredient)}
+          >
+            <Ingredient {...ingredient} />
           </li>
         ))}
       </ul>
