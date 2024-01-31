@@ -7,18 +7,24 @@ import { RootState } from "../../services/store";
 
 const Ingredient = (ingredient: IngredientType) => {
   const dispatch = useDispatch();
-  const count = useSelector((state: RootState) => state.burgerConstructor.ingredients.filter((item: IngredientType) => item._id === ingredient._id).length);
+  const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients);
+  const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
+
+  const ingredientCount = ingredients.filter((item: IngredientType) => item._id === ingredient._id).length;
+  const bunCount = bun?._id === ingredient._id ? 2 : 0;
+
+  const handleClick = () => {
+    if (ingredient.type === "bun") {
+      dispatch(setBun(ingredient));
+    } else {
+      dispatch(addIngredient(ingredient));
+    }
+  };
 
   return (
     <article
       className={styles.card}
-      onClick={() => {
-        if (ingredient.type === "bun") {
-          dispatch(setBun(ingredient));
-        } else {
-          dispatch(addIngredient(ingredient));
-        }
-      }}>
+      onClick={handleClick}>
       <img
         className={styles.card__image}
         src={ingredient.image}
@@ -29,18 +35,18 @@ const Ingredient = (ingredient: IngredientType) => {
         <CurrencyIcon type="primary" />
       </div>
       <p className={`${styles.name} text text_type_main-default`}>{ingredient.name}</p>
-      {count > 0 &&
-        (ingredient.type !== "bun" ? (
-          <Counter
-            count={count}
-            size="default"
-          />
-        ) : (
-          <Counter
-            count={2}
-            size="default"
-          />
-        ))}
+      {ingredient.type !== "bun" && ingredientCount > 1 && (
+        <Counter
+          count={ingredientCount}
+          size="default"
+        />
+      )}
+      {ingredient.type === "bun" && bunCount > 1 && (
+        <Counter
+          count={bunCount}
+          size="default"
+        />
+      )}
     </article>
   );
 };

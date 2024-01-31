@@ -1,8 +1,8 @@
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css";
+import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import styles from "./burger-constructor.module.css";
+import { clearConstructor, removeIngredient } from "../../services/constructorSlice";
 import { RootState } from "../../services/store";
-import { removeIngredient } from "../../services/constructorSlice";
 
 interface Props {
   openOrderDetails: () => void;
@@ -11,23 +11,24 @@ interface Props {
 const BurgerConstructor = ({ openOrderDetails }: Props) => {
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
   const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
+  const totalPrice = useSelector((state: RootState) => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
   const dispatch = useDispatch();
+  const handleOrderButtonClick = () => {
+    dispatch(clearConstructor());
+    openOrderDetails();
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.burger_container}>
         {bun && (
-          <>
-            <div className={styles.bun}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`${bun.name} (верх)`}
-                price={bun.price || 0}
-                thumbnail={bun.image}
-              />
-            </div>
-          </>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price || 0}
+            thumbnail={bun.image}
+          />
         )}
         <ul className={`${styles.сonstructor_list}`}>
           {ingredients.map((ingredient, index) => {
@@ -48,22 +49,18 @@ const BurgerConstructor = ({ openOrderDetails }: Props) => {
           })}
         </ul>
         {bun && (
-          <>
-            <div className={styles.bun}>
-              <ConstructorElement
-                type="bottom"
-                isLocked={true}
-                text={`${bun.name} (низ)`}
-                price={bun.price || 0}
-                thumbnail={bun.image}
-              />
-            </div>
-          </>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price || 0}
+            thumbnail={bun.image}
+          />
         )}
       </div>
       <div className={styles.price_container}>
         <div className={styles.total_price}>
-          <span className="text text_type_digits-medium">610</span>
+          <span className="text text_type_digits-medium">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button
@@ -71,7 +68,7 @@ const BurgerConstructor = ({ openOrderDetails }: Props) => {
           size="large"
           htmlType="button"
           id="order_button"
-          onClick={openOrderDetails}>
+          onClick={handleOrderButtonClick}>
           Оформить заказ
         </Button>
       </div>
