@@ -5,12 +5,14 @@ interface IngredientsState {
   ingredients: IngredientType[];
   isLoading: boolean;
   error: string | null;
+  tab: string;
 }
 
 const initialState: IngredientsState = {
   ingredients: [],
   isLoading: false,
   error: null,
+  tab: "buns",
 };
 
 export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async () => {
@@ -29,7 +31,11 @@ export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngred
 const ingredientsSlice = createSlice({
   name: "burger-ingredients",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentTab: (state, action) => {
+      state.tab = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchIngredients.pending, state => {
@@ -47,4 +53,5 @@ const ingredientsSlice = createSlice({
   },
 });
 
+export const { setCurrentTab } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

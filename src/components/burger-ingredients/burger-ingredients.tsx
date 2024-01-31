@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { fetchIngredients } from "../../services/ingredientsSlice";
-import { RootState } from "../../services/store";
 import IngredientsGroup from "../ingredients-group/ingredients-group";
+import { fetchIngredients, setCurrentTab } from "../../services/ingredientsSlice";
+import { RootState } from "../../services/store";
 import { IngredientType } from "../../utils/types";
 import styles from "./burger-ingredients.module.css";
 
@@ -13,8 +13,8 @@ interface Props {
 }
 
 const BurgerIngredients = ({ openIngredientDetails }: Props) => {
-  const [currentTab, setCurrentTab] = useState("buns");
   const dispatch = useDispatch();
+  const currentTab = useSelector((state: RootState) => state.burgerIngredients.tab);
   const ingredients = useSelector((state: RootState) => state.burgerIngredients.ingredients);
 
   const buns = ingredients.filter(item => item.type === "bun");
@@ -39,8 +39,9 @@ const BurgerIngredients = ({ openIngredientDetails }: Props) => {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setCurrentTab(entry.target.id);
+          // без проверки на document.readyState === "complete" при первой загрузке страницы таб переключается на "Начинки"
+          if (entry.isIntersecting && document.readyState === "complete") {
+            dispatch(setCurrentTab(entry.target.id));
           }
         });
       },
