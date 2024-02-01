@@ -1,8 +1,9 @@
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./burger-constructor.module.css";
-import { clearConstructor, composeOrder, postOrder, removeIngredient } from "../../services/constructorSlice";
+import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { composeOrder, postOrder, removeIngredient } from "../../services/constructorSlice";
 import { RootState } from "../../services/store";
+import styles from "./burger-constructor.module.css";
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
@@ -14,9 +15,14 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const order = useSelector((state: RootState) => state.burgerConstructor.orderString);
 
+  useEffect(() => {
+    if (order) {
+      dispatch(postOrder(order));
+    }
+  }, [order, dispatch]);
+
   const handleOrderButtonClick = () => {
     dispatch(composeOrder());
-    dispatch(postOrder(order));
   };
 
   return (

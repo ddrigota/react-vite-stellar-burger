@@ -28,7 +28,8 @@ const IngredientsGroup = React.forwardRef<HTMLDivElement, Props>(({ title, ingre
           <li
             key={ingredient._id}
             className={`${styles.ingredients__list_item}`}
-            onClick={() => openIngredientDetailsModal(ingredient)}>
+            // onClick={() => openIngredientDetailsModal(ingredient)}
+          >
             <Ingredient {...ingredient} />
           </li>
         ))}

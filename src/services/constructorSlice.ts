@@ -104,6 +104,9 @@ const constructorSlice = createSlice({
           state.error = "Ошибка в заказе";
         }
         state.modalIsOpen = true;
+        state.orderString = null;
+        state.bun = null;
+        state.ingredients = [];
       })
       .addCase(postOrder.rejected, (state, action) => {
         state.isLoading = false;
