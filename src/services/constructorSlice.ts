@@ -6,7 +6,7 @@ interface ConstructorState {
   ingredients: IngredientType[];
   bunPrice: number;
   ingredientsPrice: number;
-  order: string | null;
+  orderString: string | null;
 }
 
 const initialState: ConstructorState = {
@@ -14,7 +14,7 @@ const initialState: ConstructorState = {
   ingredients: [],
   bunPrice: 0,
   ingredientsPrice: 0,
-  order: null,
+  orderString: null,
 };
 
 const constructorSlice = createSlice({
@@ -41,7 +41,7 @@ const constructorSlice = createSlice({
       const order = {
         ingredients: [...ingredientsId, state.bun?._id, state.bun?._id],
       };
-      state.order = JSON.stringify(order);
+      state.orderString = JSON.stringify(order);
     },
     clearConstructor: () => initialState,
   },
