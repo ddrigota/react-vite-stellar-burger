@@ -12,11 +12,11 @@ const Ingredient = (ingredient: IngredientType) => {
   const ingredientCount = ingredients.filter((item: IngredientType) => item._id === ingredient._id).length;
   const bunCount = bun && bun._id === ingredient._id ? 2 : 0;
 
-  const [, dragRef] = useDrag({
+  const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
     collect: monitor => ({
-      isDrag: monitor.isDragging(),
+      opacity: monitor.isDragging() ? 0 : 1,
     }),
   });
 
@@ -24,7 +24,8 @@ const Ingredient = (ingredient: IngredientType) => {
     <article
       className={styles.card}
       ref={dragRef}
-      id={ingredient._id}>
+      id={ingredient._id}
+      style={{ opacity }}>
       <img
         className={styles.card__image}
         src={ingredient.image}

@@ -13,6 +13,8 @@
   align-items: center;
   gap: 16px;
   width: 100%;
+  outline-offset: 10px;
+  transition: outline 0.2s ease;
 }
 
 .сonstructor_list {

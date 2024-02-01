@@ -17,7 +17,7 @@ const BurgerConstructor = () => {
     dispatch(postOrder());
   };
 
-  const [, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(ingredient: IngredientType) {
       if (ingredient.type === "bun") {
@@ -27,7 +27,7 @@ const BurgerConstructor = () => {
       }
     },
     collect: monitor => ({
-      isHover: monitor.isOver(),
+      isHover: !!monitor.isOver(),
     }),
   });
 
@@ -35,7 +35,9 @@ const BurgerConstructor = () => {
     <div
       className={styles.container}
       ref={dropTarget}>
-      <div className={styles.burger_container}>
+      <div
+        className={styles.burger_container}
+        style={{ outline: isHover ? "4px dashed #4C4CFF" : "none" }}>
         {bun && (
           <ConstructorElement
             type="top"
