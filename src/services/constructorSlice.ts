@@ -6,30 +6,19 @@ interface ConstructorState {
   ingredients: IngredientType[];
   bunPrice: number;
   ingredientsPrice: number;
+  order: string | null;
 }
 
 const initialState: ConstructorState = {
-  bun: {
-    _id: "0",
-    name: "Выберите булку",
-    type: "bun",
-    proteins: 0,
-    fat: 0,
-    carbohydrates: 0,
-    calories: 0,
-    price: 0,
-    image: "https://placehold.jp/9e9e9e/9e9e9e/150x150.png?css=%7B%22border-radius%22%3A%22%2050%25%22%7D",
-    image_mobile: "",
-    image_large: "",
-    __v: 0,
-  },
+  bun: null,
   ingredients: [],
   bunPrice: 0,
   ingredientsPrice: 0,
+  order: null,
 };
 
 const constructorSlice = createSlice({
-  name: "constructor",
+  name: "burger-constructor",
   initialState,
   reducers: {
     addIngredient: (state, action: PayloadAction<IngredientType>) => {
@@ -47,6 +36,13 @@ const constructorSlice = createSlice({
       state.bun = action.payload;
       state.bunPrice = action.payload.price * 2;
     },
+    composeOrder: state => {
+      const ingredientsId = state.ingredients.map(item => item._id);
+      const order = {
+        ingredients: [...ingredientsId, state.bun?._id, state.bun?._id],
+      };
+      state.order = JSON.stringify(order);
+    },
     clearConstructor: () => initialState,
   },
 });
@@ -54,4 +50,4 @@ const constructorSlice = createSlice({
 const constructorReducer = constructorSlice.reducer;
 
 export default constructorReducer;
-export const { addIngredient, removeIngredient, setBun, clearConstructor } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor } = constructorSlice.actions;

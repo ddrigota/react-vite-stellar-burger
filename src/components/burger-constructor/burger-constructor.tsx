@@ -1,7 +1,7 @@
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./burger-constructor.module.css";
-import { clearConstructor, removeIngredient } from "../../services/constructorSlice";
+import { clearConstructor, composeOrder, removeIngredient } from "../../services/constructorSlice";
 import { RootState } from "../../services/store";
 
 interface Props {
@@ -10,11 +10,15 @@ interface Props {
 
 const BurgerConstructor = ({ openOrderDetails }: Props) => {
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
+
   const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
+
   const totalPrice = useSelector((state: RootState) => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
+
   const dispatch = useDispatch();
+
   const handleOrderButtonClick = () => {
-    dispatch(clearConstructor());
+    dispatch(composeOrder());
     openOrderDetails();
   };
 

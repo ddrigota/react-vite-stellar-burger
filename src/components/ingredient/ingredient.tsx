@@ -13,7 +13,7 @@ const Ingredient = (ingredient: IngredientType) => {
   const ingredientCount = ingredients.filter((item: IngredientType) => item._id === ingredient._id).length;
   const bunCount = bun?._id === ingredient._id ? 2 : 0;
 
-  const handleClick = () => {
+  const handleAddIngredient = () => {
     if (ingredient.type === "bun") {
       dispatch(setBun(ingredient));
     } else {
@@ -24,7 +24,7 @@ const Ingredient = (ingredient: IngredientType) => {
   return (
     <article
       className={styles.card}
-      onClick={handleClick}>
+      onClick={handleAddIngredient}>
       <img
         className={styles.card__image}
         src={ingredient.image}

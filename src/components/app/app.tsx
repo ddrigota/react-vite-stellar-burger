@@ -7,27 +7,26 @@ import Modal from "../modal/modal";
 import { IngredientType } from "../../utils/types";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-
-interface IngredientDetailsType {
-  isOpen: boolean;
-  ingredient: IngredientType | null;
-}
+import { clearIngredientDetails, setIngredientDetails } from "../../services/ingredientDetailsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../services/store";
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpen: false });
-  const [ingredientDetails, setIngredientDetails] = useState<IngredientDetailsType>({ isOpen: false, ingredient: null });
+  const dispatch = useDispatch();
+  const ingredientDetails = useSelector((state: RootState) => state.ingredientDetails);
 
   const openOrderDetails = () => {
     setOrderDetails({ isOpen: true });
   };
 
   const openIngredientDetails = (ingredient: IngredientType | null) => {
-    setIngredientDetails({ isOpen: true, ingredient });
+    dispatch(setIngredientDetails(ingredient));
   };
 
   const closeModal = () => {
     setOrderDetails({ isOpen: false });
-    setIngredientDetails({ isOpen: false, ingredient: null });
+    dispatch(clearIngredientDetails());
   };
 
   return (
