@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
+import { RootState } from "./store";
 
 interface ConstructorState {
   bun: IngredientType | null;
@@ -11,6 +12,13 @@ interface ConstructorState {
   modalIsOpen: boolean;
   isLoading: boolean;
   error: string | null;
+}
+
+interface OrderResponse {
+  success: boolean;
+  order: {
+    number: number;
+  };
 }
 
 const initialState: ConstructorState = {
@@ -38,19 +46,21 @@ const initialState: ConstructorState = {
   error: null,
 };
 
-export const postOrder = createAsyncThunk("burger-constructor/postOrder", async (order: string | null, { rejectWithValue }) => {
+export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>("burger-constructor/postOrder", async (_, { rejectWithValue, getState, dispatch }) => {
   try {
+    dispatch(composeOrder());
+    const state = getState();
     const response = await fetch("https://norma.nomoreparties.space/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
-      body: order,
+      body: state.burgerConstructor.orderString,
     });
     if (!response.ok) {
       throw new Error("Ошибка сервера");
     }
-    const data = await response.json();
+    const data: OrderResponse = await response.json();
     return data;
   } catch (error) {
     return rejectWithValue((error as Error).message);
