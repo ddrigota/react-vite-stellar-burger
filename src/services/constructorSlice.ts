@@ -10,6 +10,7 @@ interface ConstructorState {
 }
 
 const initialState: ConstructorState = {
+  // плейсхолдер для булки
   bun: {
     _id: "",
     name: "Выберите булку",
@@ -49,6 +50,7 @@ const constructorSlice = createSlice({
       state.bun = action.payload;
       state.bunPrice = action.payload.price * 2;
     },
+    // собрать JSON строку для отправки на сервер
     composeOrder: state => {
       const ingredientsId = state.ingredients.map(item => item._id);
       const order = {

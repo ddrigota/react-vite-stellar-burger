@@ -27,12 +27,13 @@ export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootStat
   try {
     dispatch(composeOrder());
     const state = getState();
+    const orderString = state.burgerConstructor.orderString;
     const response = await fetch("https://norma.nomoreparties.space/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
-      body: JSON.stringify({ ingredients: state.burgerConstructor.ingredients.map(ingredient => ingredient._id) }),
+      body: orderString,
     });
     if (!response.ok) {
       throw new Error("Ошибка сервера");
