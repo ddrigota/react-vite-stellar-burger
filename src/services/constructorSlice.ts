@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
-import { RootState } from "./store";
 
 interface ConstructorState {
   bun: IngredientType | null;
@@ -8,17 +7,6 @@ interface ConstructorState {
   bunPrice: number;
   ingredientsPrice: number;
   orderString: string | null;
-  orderNumber: number | null;
-  modalIsOpen: boolean;
-  isLoading: boolean;
-  error: string | null;
-}
-
-interface OrderResponse {
-  success: boolean;
-  order: {
-    number: number;
-  };
 }
 
 const initialState: ConstructorState = {
@@ -40,32 +28,7 @@ const initialState: ConstructorState = {
   bunPrice: 0,
   ingredientsPrice: 0,
   orderString: null,
-  orderNumber: null,
-  modalIsOpen: false,
-  isLoading: false,
-  error: null,
 };
-
-export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>("burger-constructor/postOrder", async (_, { rejectWithValue, getState, dispatch }) => {
-  try {
-    dispatch(composeOrder());
-    const state = getState();
-    const response = await fetch("https://norma.nomoreparties.space/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: state.burgerConstructor.orderString,
-    });
-    if (!response.ok) {
-      throw new Error("Ошибка сервера");
-    }
-    const data: OrderResponse = await response.json();
-    return data;
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
-});
 
 const constructorSlice = createSlice({
   name: "burger-constructor",
@@ -93,39 +56,11 @@ const constructorSlice = createSlice({
       };
       state.orderString = JSON.stringify(order);
     },
-    closeOrderModal: state => {
-      state.modalIsOpen = false;
-      state.orderString = null;
-      state.orderNumber = null;
-    },
     clearConstructor: () => initialState,
-  },
-  extraReducers: builder => {
-    builder
-      .addCase(postOrder.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(postOrder.fulfilled, (state, action) => {
-        state.isLoading = false;
-        if (action.payload && action.payload.order) {
-          state.orderNumber = action.payload.order.number;
-        } else {
-          state.error = "Ошибка в заказе";
-        }
-        state.modalIsOpen = true;
-        state.orderString = null;
-        state.bun = null;
-        state.ingredients = [];
-      })
-      .addCase(postOrder.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || null;
-      });
   },
 });
 
 const constructorReducer = constructorSlice.reducer;
 
 export default constructorReducer;
-export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor, closeOrderModal } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor } = constructorSlice.actions;

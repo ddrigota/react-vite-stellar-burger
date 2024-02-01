@@ -8,16 +8,21 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
-import { closeOrderModal } from "../../services/constructorSlice";
+import { closeOrderModal } from "../../services/orderSlice";
+import { clearConstructor } from "../../services/constructorSlice";
 
 function App() {
   const dispatch = useDispatch();
   const ingredientDetails = useSelector((state: RootState) => state.ingredientDetails);
-  const constructorDetails = useSelector((state: RootState) => state.burgerConstructor);
+  const orderDetails = useSelector((state: RootState) => state.order);
 
   const closeModal = () => {
-    dispatch(clearIngredientDetails());
-    dispatch(closeOrderModal());
+    if (ingredientDetails.isOpen) {
+      dispatch(clearIngredientDetails());
+    } else if (orderDetails.modalIsOpen) {
+      dispatch(closeOrderModal());
+      dispatch(clearConstructor());
+    }
   };
 
   return (
@@ -32,7 +37,7 @@ function App() {
         </section>
       </main>
 
-      {constructorDetails.modalIsOpen && (
+      {orderDetails.modalIsOpen && (
         <Modal
           closeModal={closeModal}
           name="">

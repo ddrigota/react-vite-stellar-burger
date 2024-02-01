@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../services/store";
 
 const OrderDetails = () => {
-  const burgerConstructor = useSelector((state: RootState) => state.burgerConstructor);
+  const order = useSelector((state: RootState) => state.order);
   return (
     <div className={styles.container}>
-      <h2 className={`${styles.order_number} text text_type_digits-large`}>{burgerConstructor.orderNumber}</h2>
+      <h2 className={`${styles.order_number} text text_type_digits-large`}>{order.orderNumber}</h2>
       <p className={`text text_type_main-medium`}>идентификатор заказа</p>
       <img
         className={`${styles.image}`}

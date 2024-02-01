@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { postOrder, removeIngredient } from "../../services/constructorSlice";
+import { removeIngredient } from "../../services/constructorSlice";
+import { postOrder } from "../../services/orderSlice";
 import { RootState } from "../../services/store";
 import styles from "./burger-constructor.module.css";
 
