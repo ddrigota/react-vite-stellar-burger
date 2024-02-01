@@ -1,30 +1,30 @@
 import styles from "./ingredient.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { addIngredient, setBun } from "../../services/constructorSlice";
+import { useSelector } from "react-redux";
 import { IngredientType } from "../../utils/types";
 import { RootState } from "../../services/store";
+import { useDrag } from "react-dnd";
 
 const Ingredient = (ingredient: IngredientType) => {
-  const dispatch = useDispatch();
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients);
   const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
 
   const ingredientCount = ingredients.filter((item: IngredientType) => item._id === ingredient._id).length;
   const bunCount = bun && bun._id === ingredient._id ? 2 : 0;
 
-  const handleAddIngredient = () => {
-    if (ingredient.type === "bun") {
-      dispatch(setBun(ingredient));
-    } else {
-      dispatch(addIngredient(ingredient));
-    }
-  };
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+    collect: monitor => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   return (
     <article
       className={styles.card}
-      onClick={handleAddIngredient}>
+      ref={dragRef}
+      id={ingredient._id}>
       <img
         className={styles.card__image}
         src={ingredient.image}

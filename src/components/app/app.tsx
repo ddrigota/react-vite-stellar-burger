@@ -10,6 +10,8 @@ import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
 import { closeOrderModal } from "../../services/orderSlice";
 import { clearConstructor } from "../../services/constructorSlice";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +24,8 @@ function App() {
     } else if (orderDetails.modalIsOpen) {
       dispatch(closeOrderModal());
       dispatch(clearConstructor());
+    } else {
+      console.error("Что-то пошло не так");
     }
   };
 
@@ -29,12 +33,14 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        <section className={styles.section}>
-          <BurgerIngredients />
-        </section>
-        <section className={styles.section}>
-          <BurgerConstructor />
-        </section>
+        <DndProvider backend={HTML5Backend}>
+          <section className={styles.section}>
+            <BurgerIngredients />
+          </section>
+          <section className={styles.section}>
+            <BurgerConstructor />
+          </section>
+        </DndProvider>
       </main>
 
       {orderDetails.modalIsOpen && (

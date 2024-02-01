@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { removeIngredient } from "../../services/constructorSlice";
+import { addIngredient, removeIngredient, setBun } from "../../services/constructorSlice";
 import { postOrder } from "../../services/orderSlice";
 import { RootState } from "../../services/store";
 import styles from "./burger-constructor.module.css";
+import { useDrop } from "react-dnd";
+import { IngredientType } from "../../utils/types";
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
@@ -15,8 +17,24 @@ const BurgerConstructor = () => {
     dispatch(postOrder());
   };
 
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient: IngredientType) {
+      if (ingredient.type === "bun") {
+        dispatch(setBun(ingredient));
+      } else {
+        dispatch(addIngredient(ingredient));
+      }
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      ref={dropTarget}>
       <div className={styles.burger_container}>
         {bun && (
           <ConstructorElement
