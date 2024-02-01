@@ -11,7 +11,7 @@ const Ingredient = (ingredient: IngredientType) => {
   const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
 
   const ingredientCount = ingredients.filter((item: IngredientType) => item._id === ingredient._id).length;
-  const bunCount = bun?._id === ingredient._id ? 2 : 0;
+  const bunCount = bun && bun._id === ingredient._id ? 2 : 0;
 
   const handleAddIngredient = () => {
     if (ingredient.type === "bun") {
@@ -35,13 +35,13 @@ const Ingredient = (ingredient: IngredientType) => {
         <CurrencyIcon type="primary" />
       </div>
       <p className={`${styles.name} text text_type_main-default`}>{ingredient.name}</p>
-      {ingredient.type !== "bun" && ingredientCount > 1 && (
+      {ingredient.type !== "bun" && ingredientCount > 0 && (
         <Counter
           count={ingredientCount}
           size="default"
         />
       )}
-      {ingredient.type === "bun" && bunCount > 1 && (
+      {ingredient.type === "bun" && bunCount > 0 && (
         <Counter
           count={bunCount}
           size="default"

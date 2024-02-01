@@ -10,7 +10,20 @@ interface ConstructorState {
 }
 
 const initialState: ConstructorState = {
-  bun: null,
+  bun: {
+    _id: "",
+    name: "Выберите булку",
+    type: "bun",
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+    calories: 0,
+    price: 0,
+    image: "https://code.s3.yandex.net/react/code/bun-02.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+    __v: 0,
+  },
   ingredients: [],
   bunPrice: 0,
   ingredientsPrice: 0,
