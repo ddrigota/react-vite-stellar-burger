@@ -1,23 +1,23 @@
-import styles from "./app.module.css";
-import { useState } from "react";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import Modal from "../modal/modal";
-import { IngredientType } from "../../utils/types";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { clearIngredientDetails, setIngredientDetails } from "../../services/ingredientDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { IngredientType } from "../../utils/types";
 import { RootState } from "../../services/store";
+import { clearIngredientDetails, setIngredientDetails } from "../../services/ingredientDetailsSlice";
+import { clearOrderDetails, setOrderDetails } from "../../services/orderDetailsSlice";
+import AppHeader from "../app-header/app-header";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import styles from "./app.module.css";
 
 function App() {
-  const [orderDetails, setOrderDetails] = useState({ isOpen: false });
   const dispatch = useDispatch();
   const ingredientDetails = useSelector((state: RootState) => state.ingredientDetails);
+  const orderDetails = useSelector((state: RootState) => state.orderDetails);
 
   const openOrderDetails = () => {
-    setOrderDetails({ isOpen: true });
+    dispatch(setOrderDetails(100));
   };
 
   const openIngredientDetails = (ingredient: IngredientType | null) => {
@@ -25,8 +25,8 @@ function App() {
   };
 
   const closeModal = () => {
-    setOrderDetails({ isOpen: false });
     dispatch(clearIngredientDetails());
+    dispatch(clearOrderDetails());
   };
 
   return (
