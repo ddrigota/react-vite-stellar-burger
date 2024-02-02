@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { IngredientType } from "../../utils/types";
 import { RootState } from "../../services/store";
-import { clearIngredientDetails, setIngredientDetails } from "../../services/ingredientDetailsSlice";
-import { clearOrderDetails, setOrderDetails } from "../../services/orderDetailsSlice";
+import { clearIngredientDetails } from "../../services/ingredientDetailsSlice";
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -10,23 +8,16 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
+import { closeOrderModal } from "../../services/constructorSlice";
 
 function App() {
   const dispatch = useDispatch();
   const ingredientDetails = useSelector((state: RootState) => state.ingredientDetails);
-  const orderDetails = useSelector((state: RootState) => state.orderDetails);
-
-  const openOrderDetails = () => {
-    dispatch(setOrderDetails(100));
-  };
-
-  const openIngredientDetails = (ingredient: IngredientType | null) => {
-    dispatch(setIngredientDetails(ingredient));
-  };
+  const constructorDetails = useSelector((state: RootState) => state.burgerConstructor);
 
   const closeModal = () => {
     dispatch(clearIngredientDetails());
-    dispatch(clearOrderDetails());
+    dispatch(closeOrderModal());
   };
 
   return (
@@ -34,14 +25,14 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <section className={styles.section}>
-          <BurgerIngredients openIngredientDetails={openIngredientDetails} />
+          <BurgerIngredients />
         </section>
         <section className={styles.section}>
-          <BurgerConstructor openOrderDetails={openOrderDetails} />
+          <BurgerConstructor />
         </section>
       </main>
 
-      {orderDetails.isOpen && (
+      {constructorDetails.modalIsOpen && (
         <Modal
           closeModal={closeModal}
           name="">

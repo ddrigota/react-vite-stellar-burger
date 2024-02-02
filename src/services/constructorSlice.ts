@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
 
 interface ConstructorState {
@@ -7,6 +7,10 @@ interface ConstructorState {
   bunPrice: number;
   ingredientsPrice: number;
   orderString: string | null;
+  orderNumber: number | null;
+  modalIsOpen: boolean;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: ConstructorState = {
@@ -28,7 +32,30 @@ const initialState: ConstructorState = {
   bunPrice: 0,
   ingredientsPrice: 0,
   orderString: null,
+  orderNumber: null,
+  modalIsOpen: false,
+  isLoading: false,
+  error: null,
 };
+
+export const postOrder = createAsyncThunk("burger-constructor/postOrder", async (order: string | null, { rejectWithValue }) => {
+  try {
+    const response = await fetch("https://norma.nomoreparties.space/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: order,
+    });
+    if (!response.ok) {
+      throw new Error("Ошибка сервера");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
+  }
+});
 
 const constructorSlice = createSlice({
   name: "burger-constructor",
@@ -52,15 +79,40 @@ const constructorSlice = createSlice({
     composeOrder: state => {
       const ingredientsId = state.ingredients.map(item => item._id);
       const order = {
-        ingredients: [...ingredientsId, state.bun?._id, state.bun?._id],
+        ingredients: [state.bun?._id, ...ingredientsId, state.bun?._id],
       };
       state.orderString = JSON.stringify(order);
     },
+    closeOrderModal: state => {
+      state.modalIsOpen = false;
+      state.orderString = null;
+      state.orderNumber = null;
+    },
     clearConstructor: () => initialState,
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(postOrder.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(postOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.order) {
+          state.orderNumber = action.payload.order.number;
+        } else {
+          state.error = "Ошибка в заказе";
+        }
+        state.modalIsOpen = true;
+      })
+      .addCase(postOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || null;
+      });
   },
 });
 
 const constructorReducer = constructorSlice.reducer;
 
 export default constructorReducer;
-export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor, closeOrderModal } = constructorSlice.actions;

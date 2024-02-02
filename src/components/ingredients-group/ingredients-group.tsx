@@ -2,15 +2,21 @@ import styles from "./ingredients-group.module.css";
 import Ingredient from "../ingredient/ingredient";
 import { IngredientType } from "../../utils/types";
 import React from "react";
+import { setIngredientDetails } from "../../services/ingredientDetailsSlice";
+import { useDispatch } from "react-redux";
 
 interface Props {
   title: string;
   ingredients: IngredientType[];
-  openIngredientDetails: (ingredient: IngredientType | null) => void;
   id: string;
 }
 
-const IngredientsGroup = React.forwardRef<HTMLDivElement, Props>(({ title, ingredients, openIngredientDetails, id }, ref) => {
+const IngredientsGroup = React.forwardRef<HTMLDivElement, Props>(({ title, ingredients, id }, ref) => {
+  const dispatch = useDispatch();
+  const openIngredientDetailsModal = (ingredient: IngredientType | null) => {
+    dispatch(setIngredientDetails(ingredient));
+  };
+
   return (
     <div
       className={`${styles.ingredients__group}`}
@@ -22,8 +28,7 @@ const IngredientsGroup = React.forwardRef<HTMLDivElement, Props>(({ title, ingre
           <li
             key={ingredient._id}
             className={`${styles.ingredients__list_item}`}
-            // onClick={() => openIngredientDetails(ingredient)}
-          >
+            onClick={() => openIngredientDetailsModal(ingredient)}>
             <Ingredient {...ingredient} />
           </li>
         ))}

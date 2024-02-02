@@ -5,14 +5,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsGroup from "../ingredients-group/ingredients-group";
 import { fetchIngredients, setCurrentTab } from "../../services/ingredientsSlice";
 import { RootState } from "../../services/store";
-import { IngredientType } from "../../utils/types";
 import styles from "./burger-ingredients.module.css";
 
-interface Props {
-  openIngredientDetails: (ingredient: IngredientType | null) => void;
-}
-
-const BurgerIngredients = ({ openIngredientDetails }: Props) => {
+const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const currentTab = useSelector((state: RootState) => state.burgerIngredients.tab);
   const ingredients = useSelector((state: RootState) => state.burgerIngredients.ingredients);
@@ -95,21 +90,18 @@ const BurgerIngredients = ({ openIngredientDetails }: Props) => {
         <IngredientsGroup
           title="Булки"
           ingredients={buns}
-          openIngredientDetails={openIngredientDetails}
           id="buns"
           ref={bunsRef}
         />
         <IngredientsGroup
           title="Соусы"
           ingredients={sauces}
-          openIngredientDetails={openIngredientDetails}
           id="sauces"
           ref={saucesRef}
         />
         <IngredientsGroup
           title="Начинки"
           ingredients={mains}
-          openIngredientDetails={openIngredientDetails}
           id="main"
           ref={mainsRef}
         />

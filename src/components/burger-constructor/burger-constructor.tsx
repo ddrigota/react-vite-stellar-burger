@@ -1,14 +1,10 @@
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./burger-constructor.module.css";
-import { clearConstructor, composeOrder, removeIngredient } from "../../services/constructorSlice";
+import { clearConstructor, composeOrder, postOrder, removeIngredient } from "../../services/constructorSlice";
 import { RootState } from "../../services/store";
 
-interface Props {
-  openOrderDetails: () => void;
-}
-
-const BurgerConstructor = ({ openOrderDetails }: Props) => {
+const BurgerConstructor = () => {
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
 
   const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
@@ -16,10 +12,11 @@ const BurgerConstructor = ({ openOrderDetails }: Props) => {
   const totalPrice = useSelector((state: RootState) => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
 
   const dispatch = useDispatch();
+  const order = useSelector((state: RootState) => state.burgerConstructor.orderString);
 
   const handleOrderButtonClick = () => {
     dispatch(composeOrder());
-    openOrderDetails();
+    dispatch(postOrder(order));
   };
 
   return (
@@ -72,7 +69,8 @@ const BurgerConstructor = ({ openOrderDetails }: Props) => {
           size="large"
           htmlType="button"
           id="order_button"
-          onClick={handleOrderButtonClick}>
+          onClick={handleOrderButtonClick}
+          disabled={ingredients.length === 0 || !bun || bun._id === ""}>
           Оформить заказ
         </Button>
       </div>

@@ -15,7 +15,7 @@ const initialState: IngredientsState = {
   tab: "buns",
 };
 
-export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async () => {
+export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async (_, { rejectWithValue }) => {
   try {
     const response = await fetch("https://norma.nomoreparties.space/api/ingredients");
     if (!response.ok) {
@@ -24,7 +24,7 @@ export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngred
     const data = await response.json();
     return data.data;
   } catch (error) {
-    throw error;
+    return rejectWithValue((error as Error).message);
   }
 });
 
