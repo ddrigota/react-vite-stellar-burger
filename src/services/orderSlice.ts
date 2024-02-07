@@ -35,8 +35,7 @@ export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootStat
     },
     body: orderString,
   });
-  const data: OrderResponse = await response.json();
-  return data;
+  return response;
 });
 
 const orderSlice = createSlice({

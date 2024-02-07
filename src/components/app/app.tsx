@@ -1,16 +1,16 @@
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { clearIngredientDetails } from "../../services/ingredientDetailsSlice";
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import { clearConstructor } from "../../services/constructorSlice";
-import { clearIngredientDetails } from "../../services/ingredientDetailsSlice";
-import { closeOrderModal } from "../../services/orderSlice";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
-import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { closeOrderModal } from "../../services/orderSlice";
+import { clearConstructor } from "../../services/constructorSlice";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useAppDispatch();

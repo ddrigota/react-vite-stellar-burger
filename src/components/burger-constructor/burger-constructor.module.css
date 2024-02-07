@@ -52,3 +52,13 @@
 .сonstructor_list::-webkit-scrollbar-thumb {
   background-color: #8585ad;
 }
+
+.order_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 50%;
+  height: 60px;
+  padding: 12px 16px;
+}

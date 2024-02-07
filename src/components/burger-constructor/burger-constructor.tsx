@@ -1,3 +1,4 @@
+import { SpinnerRoundFilled } from "spinners-react";
 import { addIngredient, setBun } from "../../services/constructorSlice";
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientType } from "../../utils/types";
@@ -10,6 +11,7 @@ import styles from "./burger-constructor.module.css";
 const BurgerConstructor = () => {
   const ingredients = useAppSelector(state => state.burgerConstructor.ingredients || []);
   const bun = useAppSelector(state => state.burgerConstructor.bun);
+  const isLoading = useAppSelector(state => state.order.isLoading);
   const totalPrice = useAppSelector(state => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
   const dispatch = useAppDispatch();
 
@@ -76,9 +78,18 @@ const BurgerConstructor = () => {
           size="large"
           htmlType="button"
           id="order_button"
+          extraClass={styles.order_button}
           onClick={handleOrderButtonClick}
           disabled={ingredients.length === 0 || !bun || bun._id === ""}>
-          Оформить заказ
+          {isLoading ? (
+            <SpinnerRoundFilled
+              size={20}
+              thickness={200}
+              color="#fff"
+            />
+          ) : (
+            "Оформить заказ"
+          )}
         </Button>
       </div>
     </div>
