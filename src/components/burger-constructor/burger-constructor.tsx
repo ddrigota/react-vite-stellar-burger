@@ -1,18 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { addIngredient, setBun } from "../../services/constructorSlice";
-import { postOrder } from "../../services/orderSlice";
-import { RootState } from "../../services/store";
-import styles from "./burger-constructor.module.css";
-import { useDrop } from "react-dnd";
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientType } from "../../utils/types";
+import { postOrder } from "../../services/orderSlice";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { useDrop } from "react-dnd";
 import IngredientItem from "../ingredient-item/ingredient-item";
+import styles from "./burger-constructor.module.css";
 
 const BurgerConstructor = () => {
-  const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
-  const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
-  const totalPrice = useSelector((state: RootState) => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
-  const dispatch = useDispatch();
+  const ingredients = useAppSelector(state => state.burgerConstructor.ingredients || []);
+  const bun = useAppSelector(state => state.burgerConstructor.bun);
+  const totalPrice = useAppSelector(state => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
+  const dispatch = useAppDispatch();
 
   const handleOrderButtonClick = () => {
     dispatch(postOrder());

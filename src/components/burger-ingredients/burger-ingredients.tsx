@@ -1,16 +1,15 @@
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import IngredientsGroup from "../ingredients-group/ingredients-group";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { fetchIngredients, setCurrentTab } from "../../services/ingredientsSlice";
-import { RootState } from "../../services/store";
 import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = () => {
-  const dispatch = useDispatch();
-  const currentTab = useSelector((state: RootState) => state.burgerIngredients.tab);
-  const ingredients = useSelector((state: RootState) => state.burgerIngredients.ingredients);
+  const dispatch = useAppDispatch();
+  const currentTab = useAppSelector(state => state.burgerIngredients.tab);
+  const ingredients = useAppSelector(state => state.burgerIngredients.ingredients);
 
   const buns = ingredients.filter(item => item.type === "bun");
   const sauces = ingredients.filter(item => item.type === "sauce");

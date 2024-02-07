@@ -1,6 +1,6 @@
 import type { XYCoord } from "dnd-core";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../utils/hooks";
 import { removeIngredient, reorderConstructor } from "../../services/constructorSlice";
 import { IngredientType } from "../../utils/types";
 import styles from "./ingredient-item.module.css";
@@ -13,7 +13,7 @@ interface IngredientItemProps {
 }
 
 const IngredientItem: React.FC<IngredientItemProps> = ({ ingredient, index }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const id = ingredient.id;
   const ref = useRef<HTMLLIElement>(null);
 

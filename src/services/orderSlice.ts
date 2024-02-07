@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { composeOrder } from "./constructorSlice";
+import { request } from "../utils/api-utils";
 
 interface OrderResponse {
   success: boolean;
@@ -23,26 +24,19 @@ const initialState: OrderState = {
   error: null,
 };
 
-export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>("order/postOrder", async (_, { rejectWithValue, getState, dispatch }) => {
-  try {
-    dispatch(composeOrder());
-    const state = getState();
-    const orderString = state.burgerConstructor.orderString;
-    const response = await fetch("https://norma.nomoreparties.space/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: orderString,
-    });
-    if (!response.ok) {
-      throw new Error("Ошибка сервера");
-    }
-    const data: OrderResponse = await response.json();
-    return data;
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
+export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>("order/postOrder", async (_, { getState, dispatch }) => {
+  dispatch(composeOrder());
+  const state = getState();
+  const orderString = state.burgerConstructor.orderString;
+  const response = await request("orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: orderString,
+  });
+  const data: OrderResponse = await response.json();
+  return data;
 });
 
 const orderSlice = createSlice({

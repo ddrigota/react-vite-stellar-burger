@@ -1,13 +1,12 @@
 import styles from "./ingredient.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { IngredientType } from "../../utils/types";
-import { RootState } from "../../services/store";
 import { useDrag } from "react-dnd";
 
 const Ingredient = (ingredient: IngredientType) => {
-  const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients);
-  const bun = useSelector((state: RootState) => state.burgerConstructor.bun);
+  const ingredients = useAppSelector(state => state.burgerConstructor.ingredients);
+  const bun = useAppSelector(state => state.burgerConstructor.bun);
 
   const ingredientCount = ingredients.filter((item: IngredientType) => item._id === ingredient._id).length;
   const bunCount = bun && bun._id === ingredient._id ? 2 : 0;

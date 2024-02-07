@@ -3,7 +3,7 @@ import Ingredient from "../ingredient/ingredient";
 import { IngredientType } from "../../utils/types";
 import React from "react";
 import { setIngredientDetails } from "../../services/ingredientDetailsSlice";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../utils/hooks";
 
 interface Props {
   title: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const IngredientsGroup = React.forwardRef<HTMLDivElement, Props>(({ title, ingredients, id }, ref) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const openIngredientDetailsModal = (ingredient: IngredientType | null) => {
     dispatch(setIngredientDetails(ingredient));
   };

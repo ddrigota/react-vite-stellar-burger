@@ -1,10 +1,9 @@
 import styles from "./order-details.module.css";
 import doneImage from "../../images/done.png";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/store";
+import { useAppSelector } from "../../utils/hooks";
 
 const OrderDetails = () => {
-  const order = useSelector((state: RootState) => state.order);
+  const order = useAppSelector(state => state.order);
   return (
     <div className={styles.container}>
       <h2 className={`${styles.order_number} text text_type_digits-large`}>{order.orderNumber}</h2>
