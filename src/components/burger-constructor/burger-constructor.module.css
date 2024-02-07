@@ -30,14 +30,6 @@
   width: 100%;
 }
 
-.сonstructor_item {
-  width: 98%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 12px;
-}
-
 .price_container {
   display: flex;
   justify-content: end;

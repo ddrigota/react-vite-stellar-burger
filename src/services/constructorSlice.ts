@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
+import { v4 as uuidv4 } from "uuid";
 
 interface ConstructorState {
   bun: IngredientType | null;
@@ -7,6 +8,8 @@ interface ConstructorState {
   bunPrice: number;
   ingredientsPrice: number;
   orderString: string | null;
+  to?: number | undefined;
+  from?: number | undefined;
 }
 
 const initialState: ConstructorState = {
@@ -36,7 +39,7 @@ const constructorSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: (state, action: PayloadAction<IngredientType>) => {
-      state.ingredients.push(action.payload);
+      state.ingredients.push({ ...action.payload, id: uuidv4() });
       state.ingredientsPrice += action.payload.price;
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
@@ -58,6 +61,9 @@ const constructorSlice = createSlice({
       };
       state.orderString = JSON.stringify(order);
     },
+    reorderConstructor: (state, action: PayloadAction<{ from: number; to: number }>) => {
+      state.ingredients.splice(action.payload.to, 0, state.ingredients.splice(action.payload.from, 1)[0]);
+    },
     clearConstructor: () => initialState,
   },
 });
@@ -65,4 +71,4 @@ const constructorSlice = createSlice({
 const constructorReducer = constructorSlice.reducer;
 
 export default constructorReducer;
-export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor, reorderConstructor } = constructorSlice.actions;

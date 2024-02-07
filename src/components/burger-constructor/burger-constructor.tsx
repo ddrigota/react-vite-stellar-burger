@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { addIngredient, removeIngredient, setBun } from "../../services/constructorSlice";
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { addIngredient, setBun } from "../../services/constructorSlice";
 import { postOrder } from "../../services/orderSlice";
 import { RootState } from "../../services/store";
 import styles from "./burger-constructor.module.css";
 import { useDrop } from "react-dnd";
 import { IngredientType } from "../../utils/types";
+import IngredientItem from "../ingredient-item/ingredient-item";
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((state: RootState) => state.burgerConstructor.ingredients || []);
@@ -48,22 +49,13 @@ const BurgerConstructor = () => {
           />
         )}
         <ul className={`${styles.сonstructor_list}`}>
-          {ingredients.map((ingredient, index) => {
-            return (
-              <li
-                className={`${styles.сonstructor_item}`}
-                key={`${ingredient._id}-${index}`}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  isLocked={false}
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image}
-                  handleClose={() => dispatch(removeIngredient(ingredient._id))}
-                />
-              </li>
-            );
-          })}
+          {ingredients.map((ingredient, index) => (
+            <IngredientItem
+              key={ingredient.id}
+              ingredient={ingredient}
+              index={index}
+            />
+          ))}
         </ul>
         {bun && (
           <ConstructorElement
