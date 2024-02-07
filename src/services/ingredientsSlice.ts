@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
+import { request } from "../utils/api-utils";
 
 interface IngredientsState {
   ingredients: IngredientType[];
@@ -15,17 +16,9 @@ const initialState: IngredientsState = {
   tab: "buns",
 };
 
-export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async (_, { rejectWithValue }) => {
-  try {
-    const response = await fetch("https://norma.nomoreparties.space/api/ingredients");
-    if (!response.ok) {
-      throw new Error("Ошибка сервера");
-    }
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
+export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async () => {
+  const response = await request("ingredients");
+  return response.data;
 });
 
 const ingredientsSlice = createSlice({
