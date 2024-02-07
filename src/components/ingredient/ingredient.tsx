@@ -4,7 +4,7 @@ import { useAppSelector } from "../../utils/hooks";
 import { IngredientType } from "../../utils/types";
 import { useDrag } from "react-dnd";
 
-const Ingredient = (ingredient: IngredientType) => {
+const Ingredient = ({ ingredient }: { ingredient: IngredientType }) => {
   const ingredients = useAppSelector(state => state.burgerConstructor.ingredients);
   const bun = useAppSelector(state => state.burgerConstructor.bun);
 
