@@ -1,38 +1,95 @@
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css";
+import { SpinnerRoundFilled } from "spinners-react";
+import { addIngredient, setBun } from "../../services/constructorSlice";
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientType } from "../../utils/types";
+import { postOrder } from "../../services/orderSlice";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { useDrop } from "react-dnd";
+import IngredientItem from "../ingredient-item/ingredient-item";
+import styles from "./burger-constructor.module.css";
 
-interface Props {
-  openOrderDetails: () => void;
-  ingredients: IngredientType[];
-}
+const BurgerConstructor = () => {
+  const ingredients = useAppSelector(state => state.burgerConstructor.ingredients || []);
+  const bun = useAppSelector(state => state.burgerConstructor.bun);
+  const isLoading = useAppSelector(state => state.order.isLoading);
+  const totalPrice = useAppSelector(state => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
+  const dispatch = useAppDispatch();
 
-const BurgerConstructor = ({ openOrderDetails, ingredients }: Props) => {
-  const mains = ingredients.filter(ingredient => ingredient.type === "main");
+  const handleOrderButtonClick = () => {
+    dispatch(postOrder());
+  };
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient: IngredientType) {
+      if (ingredient.type === "bun") {
+        dispatch(setBun(ingredient));
+      } else {
+        dispatch(addIngredient(ingredient));
+      }
+    },
+    collect: monitor => ({
+      isHover: !!monitor.isOver(),
+    }),
+  });
 
   return (
-    <div className={styles.container}>
-      <div className={styles.burger_container}>
-        <ConstructorElement type="top" isLocked={true} text="Краторная булка N-200i (верх)" price={20} thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"} />
+    <div
+      className={styles.container}
+      ref={dropTarget}>
+      <div
+        className={styles.burger_container}
+        style={{ outline: isHover ? "4px dashed #4C4CFF" : "none" }}>
+        {bun && (
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price || 0}
+            thumbnail={bun.image}
+          />
+        )}
         <ul className={`${styles.сonstructor_list}`}>
-          {mains.map(ingredient => {
-            return (
-              <li className={`${styles.сonstructor_item}`} key={ingredient._id}>
-                <DragIcon type="primary" />
-                <ConstructorElement isLocked={false} text={ingredient.name} price={ingredient.price} thumbnail={ingredient.image} />
-              </li>
-            );
-          })}
+          {ingredients.map((ingredient, index) => (
+            <IngredientItem
+              key={ingredient.id}
+              ingredient={ingredient}
+              index={index}
+            />
+          ))}
         </ul>
-        <ConstructorElement type="bottom" isLocked={true} text="Краторная булка N-200i (низ)" price={20} thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"} />
+        {bun && (
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price || 0}
+            thumbnail={bun.image}
+          />
+        )}
       </div>
       <div className={styles.price_container}>
         <div className={styles.total_price}>
-          <span className="text text_type_digits-medium">610</span>
+          <span className="text text_type_digits-medium">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" htmlType="button" id="order_button" onClick={openOrderDetails}>
-          Оформить заказ
+        <Button
+          type="primary"
+          size="large"
+          htmlType="button"
+          id="order_button"
+          extraClass={styles.order_button}
+          onClick={handleOrderButtonClick}
+          disabled={ingredients.length === 0 || !bun || bun._id === ""}>
+          {isLoading ? (
+            <SpinnerRoundFilled
+              size={20}
+              thickness={200}
+              color="#fff"
+            />
+          ) : (
+            "Оформить заказ"
+          )}
         </Button>
       </div>
     </div>

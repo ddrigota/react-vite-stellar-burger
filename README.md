@@ -8,6 +8,8 @@ A web application to make and order your own futuristic burger
 
 - React 18
 - Typescript
+- Redux Toolkit
+- React DnD
 - HTML
 - CSS
 
@@ -19,12 +21,12 @@ To install the project, follow these steps:
 
 2. In target folder run
 
-  ```bash
-  npm i
-  ```
+```bash
+npm i
+```
 
 3. To start a development server use
 
-  ```bash
-  npm start
-  ```
+```bash
+npm start
+```
