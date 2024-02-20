@@ -1,16 +1,29 @@
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { clearIngredientDetails } from "../../services/ingredientDetailsSlice";
 import AppHeader from "../app-header/app-header";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
 import { closeOrderModal } from "../../services/orderSlice";
 import { clearConstructor } from "../../services/constructorSlice";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  Error404,
+  ForgotPassword,
+  Home,
+  Login,
+  Register,
+  ResetPassword,
+} from "../../pages/";
+
+const router = createBrowserRouter([
+  { path: "/", element: <Home />, errorElement: <Error404 /> },
+  { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-password", element: <ResetPassword /> },
+]);
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,16 +44,8 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <section className={styles.section}>
-            <BurgerIngredients />
-          </section>
-          <section className={styles.section}>
-            <BurgerConstructor />
-          </section>
-        </DndProvider>
-      </main>
+
+      <RouterProvider router={router} />
 
       {orderDetails.modalIsOpen && (
         <Modal
