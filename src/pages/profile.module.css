@@ -1,14 +1,16 @@
 .container {
   display: flex;
   margin-top: 120px;
-  width: 70%;
+  justify-content: center;
+  width: 100%;
+  gap: 60px;
 }
 
 .menu {
   display: flex;
   flex-direction: column;
   gap: 80px;
-  width: 40%;
+  max-width: 320px;
 }
 
 .navigation {
@@ -33,4 +35,13 @@
   padding: 0;
   color: #8585ad;
   cursor: pointer;
+}
+
+.text {
+  margin: 0;
+  color: #8585ad;
+}
+
+.outlet {
+  width: 480px;
 }

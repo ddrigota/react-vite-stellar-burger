@@ -30,12 +30,13 @@ function Profile() {
             Выход
           </button>
         </div>
-        <p
-          className={`${styles.text} text text_type_main-default text_color_inactive `}>
+        <p className={`${styles.text} text text_type_main-default`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <Outlet />
+      <div className={styles.outlet}>
+        <Outlet />
+      </div>
     </div>
   );
 }

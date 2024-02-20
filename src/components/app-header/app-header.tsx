@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom";
 import styles from "./app-header.module.css";
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const AppHeader = () => {
   return (
@@ -7,25 +13,40 @@ const AppHeader = () => {
       <nav className={styles.nav}>
         <ul className={styles.list_left}>
           <li className={styles.list__item}>
-            <a className={styles.link} href="/">
+            <Link
+              className={styles.link}
+              to="/">
               <BurgerIcon type="primary" />
-              <span className={`${styles.link__text} text text_type_main-default`}>Конструктор</span>
-            </a>
+              <span
+                className={`${styles.link__text} text text_type_main-default`}>
+                Конструктор
+              </span>
+            </Link>
           </li>
           <li className={styles.list__item}>
-            <a className={styles.link} href="/">
+            <Link
+              className={styles.link}
+              to="/orders">
               <ListIcon type="secondary" />
-              <span className={`${styles.link__text} text text_type_main-default`}>Лента заказов</span>
-            </a>
+              <span
+                className={`${styles.link__text} text text_type_main-default`}>
+                Лента заказов
+              </span>
+            </Link>
           </li>
         </ul>
         <Logo />
         <ul className={styles.list_right}>
           <li className={styles.list__item}>
-            <a className={styles.link} href="/">
+            <Link
+              className={styles.link}
+              to="/profile">
               <ProfileIcon type="secondary" />
-              <span className={`${styles.link__text} text text_type_main-default`}>Личный кабинет</span>
-            </a>
+              <span
+                className={`${styles.link__text} text text_type_main-default`}>
+                Личный кабинет
+              </span>
+            </Link>
           </li>
         </ul>
       </nav>

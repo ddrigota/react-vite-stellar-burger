@@ -5,11 +5,48 @@ import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./services/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Layout from "./pages/layout";
+import {
+  Error404,
+  ForgotPassword,
+  Login,
+  Orders,
+  Profile,
+  ProfileInfo,
+  Register,
+  ResetPassword,
+} from "./pages";
+import IngredientDetails from "./components/ingredient-details/ingredient-details";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <Error404 />,
+    children: [
+      { element: <App />, index: true },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+      { path: "forgot-password", element: <ForgotPassword /> },
+      { path: "reset-password", element: <ResetPassword /> },
+      {
+        path: "profile",
+        element: <Profile />,
+        children: [
+          { element: <ProfileInfo />, index: true },
+          { path: "orders", element: <Orders /> },
+        ],
+      },
+      { path: "ingredients/:id", element: <IngredientDetails /> },
+    ],
+  },
+]);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

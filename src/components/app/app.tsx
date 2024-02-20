@@ -1,62 +1,41 @@
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { clearIngredientDetails } from "../../services/ingredientDetailsSlice";
-import AppHeader from "../app-header/app-header";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
 import { closeOrderModal } from "../../services/orderSlice";
 import { clearConstructor } from "../../services/constructorSlice";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {
-  Error404,
-  ForgotPassword,
-  Home,
-  Login,
-  Orders,
-  Profile,
-  ProfileInfo,
-  Register,
-  ResetPassword,
-} from "../../pages/";
-
-const router = createBrowserRouter([
-  { path: "/", element: <Home />, errorElement: <Error404 /> },
-  { path: "/login", element: <Login /> },
-  { path: "/register", element: <Register /> },
-  { path: "/forgot-password", element: <ForgotPassword /> },
-  { path: "/reset-password", element: <ResetPassword /> },
-  {
-    path: "/profile",
-    element: <Profile />,
-    children: [
-      { path: "/profile", element: <ProfileInfo />, index: true },
-      { path: "/profile/orders", element: <Orders /> },
-    ],
-  },
-]);
+import { DndProvider } from "react-dnd";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 
 function App() {
   const dispatch = useAppDispatch();
   const ingredientDetails = useAppSelector(state => state.ingredientDetails);
   const orderDetails = useAppSelector(state => state.order);
+  const location = useLocation();
+  let navigate = useNavigate();
+  let state = location.state as { backgroundLocation?: Location };
 
   const closeModal = () => {
-    if (ingredientDetails.isOpen) {
-      dispatch(clearIngredientDetails());
-    } else if (orderDetails.modalIsOpen) {
-      dispatch(closeOrderModal());
-      dispatch(clearConstructor());
-    } else {
-      console.error("Что-то пошло не так");
-    }
+    navigate(-1);
   };
 
   return (
     <div className={styles.app}>
-      <AppHeader />
-
-      <RouterProvider router={router} />
+      <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
+          <section className={styles.section}>
+            <BurgerIngredients />
+          </section>
+          <section className={styles.section}>
+            <BurgerConstructor />
+          </section>
+        </DndProvider>
+      </main>
 
       {orderDetails.modalIsOpen && (
         <Modal
@@ -65,13 +44,19 @@ function App() {
           <OrderDetails />
         </Modal>
       )}
-
-      {ingredientDetails.isOpen && ingredientDetails.ingredient && (
-        <Modal
-          closeModal={closeModal}
-          name="Детали Ингридиента">
-          <IngredientDetails ingredient={ingredientDetails.ingredient} />
-        </Modal>
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal
+                closeModal={closeModal}
+                name="Детали Ингридиента">
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
       )}
     </div>
   );

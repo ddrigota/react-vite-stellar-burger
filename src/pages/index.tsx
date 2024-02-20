@@ -1,4 +1,3 @@
-import Home from "./home";
 import Login from "./login";
 import Register from "./register";
 import ForgotPassword from "./forgot-password";
@@ -9,7 +8,6 @@ import ProfileInfo from "./profile-info";
 import Orders from "./orders";
 
 export {
-  Home,
   Login,
   Register,
   ForgotPassword,

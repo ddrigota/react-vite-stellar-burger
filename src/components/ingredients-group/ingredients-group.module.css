@@ -4,13 +4,11 @@
   gap: 24px;
   padding: 24px 16px 40px;
   list-style: none;
+  overflow-y: auto;
 }
 
-/* .ingredients__list_item {
-  border-radius: 8px;
+.link {
+  text-decoration: none;
+  color: inherit;
+  padding: 0;
 }
-
-.ingredients__list_item:hover {
-  cursor: pointer;
-  background-color: #1c1c21;
-} */
