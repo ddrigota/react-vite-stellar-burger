@@ -13,6 +13,9 @@ import {
   ForgotPassword,
   Home,
   Login,
+  Orders,
+  Profile,
+  ProfileInfo,
   Register,
   ResetPassword,
 } from "../../pages/";
@@ -23,6 +26,14 @@ const router = createBrowserRouter([
   { path: "/register", element: <Register /> },
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-password", element: <ResetPassword /> },
+  {
+    path: "/profile",
+    element: <Profile />,
+    children: [
+      { path: "/profile", element: <ProfileInfo />, index: true },
+      { path: "/profile/orders", element: <Orders /> },
+    ],
+  },
 ]);
 
 function App() {
