@@ -6,14 +6,3 @@
   color: #f2f2f3;
   min-width: 1280px;
 }
-
-.main {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
-  padding: 40px 20px;
-}
-
-.section {
-  height: 80vh;
-}

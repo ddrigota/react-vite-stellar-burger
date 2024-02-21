@@ -6,6 +6,7 @@ import Error404 from "./error-page";
 import Profile from "./profile";
 import ProfileInfo from "./profile-info";
 import Orders from "./orders";
+import HomePage from "./home-page";
 
 export {
   Login,
@@ -16,4 +17,5 @@ export {
   Profile,
   ProfileInfo,
   Orders,
+  HomePage,
 };
