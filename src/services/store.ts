@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import ingredientsSlice from "./ingredientsSlice";
 import constructorSlice from "./constructorSlice";
-import ingredientDetailsSlice from "./ingredientDetailsSlice";
+// import ingredientDetailsSlice from "./ingredientDetailsSlice";
 import orderSlice from "./orderSlice";
 
 export const store = configureStore({
   reducer: {
     burgerIngredients: ingredientsSlice,
     burgerConstructor: constructorSlice,
-    ingredientDetails: ingredientDetailsSlice,
+    // ingredientDetails: ingredientDetailsSlice,
     order: orderSlice,
   },
 });

@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import IngredientsGroup from "../ingredients-group/ingredients-group";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { fetchIngredients, setCurrentTab } from "../../services/ingredientsSlice";
+import { setCurrentTab } from "../../services/ingredientsSlice";
 import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = () => {
@@ -18,11 +18,6 @@ const BurgerIngredients = () => {
   const bunsRef = useRef<HTMLDivElement>(null);
   const saucesRef = useRef<HTMLDivElement>(null);
   const mainsRef = useRef<HTMLDivElement>(null);
-
-  // получаем ингредиенты
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, [dispatch]);
 
   // слушаем скролл и меняем таб в зависимости от того, какая группа ингредиентов находится в зоне видимости
   useEffect(() => {

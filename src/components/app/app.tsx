@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Error404,
   ForgotPassword,
@@ -10,23 +11,30 @@ import {
   ResetPassword,
 } from "../../pages";
 import Layout from "../../pages/layout";
-import { useAppSelector } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
 
 import { Route, Routes, useLocation, useNavigate } from "react-router";
+import { fetchIngredients } from "../../services/ingredientsSlice";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
   const location = useLocation();
   let navigate = useNavigate();
   let state = location.state as { backgroundLocation?: Location };
+  const dispatch = useAppDispatch();
 
   const closeModal = () => {
     navigate(-1);
   };
+
+  // получаем ингредиенты
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
