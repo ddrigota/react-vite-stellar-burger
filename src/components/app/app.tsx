@@ -69,13 +69,13 @@ function App() {
           />
           <Route
             path="profile"
-            element={<ProtectedRoute />}>
+            element={
+              <ProtectedRoute onlyUnAuth={false}>
+                <Profile />
+              </ProtectedRoute>
+            }>
             <Route
               index
-              element={<Profile />}
-            />
-            <Route
-              path="profile"
               element={<ProfileInfo />}
             />
             <Route

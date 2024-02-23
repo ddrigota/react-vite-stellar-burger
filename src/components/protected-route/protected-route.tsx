@@ -1,12 +1,14 @@
-import { Navigate, Outlet, useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { useAppSelector } from "../../utils/hooks";
 import { SpinnerCircular } from "spinners-react";
+import { ReactNode } from "react";
 
 interface ProtectedRouteProps {
+  children: ReactNode;
   onlyUnAuth?: boolean;
 }
 
-function ProtectedRoute({ onlyUnAuth }: ProtectedRouteProps) {
+function ProtectedRoute({ children, onlyUnAuth }: ProtectedRouteProps) {
   const location = useLocation();
   const user = useAppSelector(state => state.user);
   const isAuthChecked = useAppSelector(state => state.user.isAuthChecked);
@@ -37,7 +39,7 @@ function ProtectedRoute({ onlyUnAuth }: ProtectedRouteProps) {
     );
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 }
 
 export default ProtectedRoute;
