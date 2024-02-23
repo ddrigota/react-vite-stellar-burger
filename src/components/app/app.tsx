@@ -19,6 +19,7 @@ import styles from "./app.module.css";
 
 import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { fetchIngredients } from "../../services/ingredientsSlice";
+import ProtectedRoute from "../protected-route/protected-route";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
@@ -68,9 +69,13 @@ function App() {
           />
           <Route
             path="profile"
-            element={<Profile />}>
+            element={<ProtectedRoute />}>
             <Route
               index
+              element={<Profile />}
+            />
+            <Route
+              path="profile"
               element={<ProfileInfo />}
             />
             <Route

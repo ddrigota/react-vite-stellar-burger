@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { composeOrder } from "./constructorSlice";
-import { request } from "../utils/api-utils";
+import api from "../utils/api";
 
 interface OrderResponse {
   success: boolean;
@@ -24,19 +24,22 @@ const initialState: OrderState = {
   error: null,
 };
 
-export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>("order/postOrder", async (_, { getState, dispatch }) => {
-  dispatch(composeOrder());
-  const state = getState();
-  const orderString = state.burgerConstructor.orderString;
-  const response = await request("orders", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: orderString,
-  });
-  return response;
-});
+export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>(
+  "order/postOrder",
+  async (_, { getState, dispatch }) => {
+    dispatch(composeOrder());
+    const state = getState();
+    const orderString = state.burgerConstructor.orderString;
+    const response = await api.request("orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: orderString,
+    });
+    return response;
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
