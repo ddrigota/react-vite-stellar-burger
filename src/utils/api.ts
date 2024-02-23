@@ -21,7 +21,7 @@ class Api {
   }
 
   private async refreshToken(): Promise<any> {
-    return this.request("/auth/token", {
+    return this.request("auth/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ class Api {
   }
 
   public async loginUser(data: { email: string; password: string }): Promise<any> {
-    return this.request("/auth/login", {
+    return this.request("auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,9 +73,9 @@ class Api {
       throw new Error("Токен не найден");
     }
 
-    return this.request("/auth/user", {
+    return this.request("auth/user", {
       method: "GET",
-      credentials: "include",
+      credentials: "omit",
       headers: {
         "Content-Type": "application/json",
         authorization: accessToken,
@@ -84,7 +84,7 @@ class Api {
   }
 
   public async registerUser(data: { email: string; password: string; name: string }): Promise<any> {
-    return this.request("/auth/register", {
+    return this.request("auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,47 +1,57 @@
-import {
-  Button,
-  Input,
-  EmailInput,
-  PasswordInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, Input, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forms.module.css";
-import { useState } from "react";
+import { ChangeEvent, useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 
-function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+interface RegisterProps {
+  onRegister: (data: { name: string; email: string; password: string }) => void;
+}
+
+const Register: React.FC<RegisterProps> = ({ onRegister }) => {
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
   };
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!userData.email || !userData.password || !userData.name) {
+      return;
+    }
+    onRegister(userData);
   };
 
   return (
     <div className={styles.form_container}>
       <form
         action="#"
-        className={styles.form}>
-        <h1 className={`text text_type_main-medium ${styles.heading}`}>
-          Регистрация
-        </h1>
+        className={styles.form}
+        onSubmit={handleSubmit}>
+        <h1 className={`text text_type_main-medium ${styles.heading}`}>Регистрация</h1>
         <Input
-          onChange={onNameChange}
-          value={name}
+          onChange={handleChange}
+          value={userData.name}
+          name="name"
           placeholder="Имя"
         />
         <EmailInput
-          onChange={onEmailChange}
-          value={email}
+          onChange={handleChange}
+          value={userData.email}
+          name="email"
         />
         <PasswordInput
-          onChange={onPasswordChange}
-          value={password}
+          onChange={handleChange}
+          value={userData.password}
+          name="password"
         />
         <Button
           htmlType="submit"
@@ -49,8 +59,7 @@ function Register() {
           size="large">
           Зарегистрироваться
         </Button>
-        <div
-          className={`${styles.text_container} text text_type_main-default text_color_inactive`}>
+        <div className={`${styles.text_container} text text_type_main-default text_color_inactive`}>
           <p className={styles.text}>
             Уже зарегистрированы?{" "}
             <Link
@@ -63,6 +72,6 @@ function Register() {
       </form>
     </div>
   );
-}
+};
 
 export default Register;

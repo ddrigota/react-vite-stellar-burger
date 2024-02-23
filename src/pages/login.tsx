@@ -1,35 +1,50 @@
-import {
-  Button,
-  EmailInput,
-  PasswordInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forms.module.css";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+interface LoginProps {
+  onLogin: (data: { email: string; password: string }) => void;
+}
+
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
   };
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!userData.email || !userData.password) {
+      return;
+    }
+    onLogin(userData);
   };
 
   return (
     <div className={styles.form_container}>
       <form
         action="#"
-        className={styles.form}>
+        className={styles.form}
+        onSubmit={handleSubmit}>
         <h1 className={`text text_type_main-medium ${styles.heading}`}>Вход</h1>
         <EmailInput
-          onChange={onEmailChange}
-          value={email}
+          onChange={handleChange}
+          value={userData.email}
+          name="email"
         />
         <PasswordInput
-          onChange={onPasswordChange}
-          value={password}
+          onChange={handleChange}
+          value={userData.password}
+          name="password"
         />
         <Button
           htmlType="submit"
@@ -37,8 +52,7 @@ function Login() {
           size="large">
           Войти
         </Button>
-        <div
-          className={`${styles.text_container} text text_type_main-default text_color_inactive`}>
+        <div className={`${styles.text_container} text text_type_main-default text_color_inactive`}>
           <p className={styles.text}>
             Вы — новый пользователь?{" "}
             <Link
@@ -59,6 +73,6 @@ function Login() {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

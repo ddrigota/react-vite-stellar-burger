@@ -1,8 +1,4 @@
-import {
-  EmailInput,
-  Input,
-  PasswordInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
 import { useState } from "react";
 

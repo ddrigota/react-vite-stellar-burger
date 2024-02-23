@@ -1,3 +1,19 @@
-export const isActionPending = (action: any) => action?.type?.endsWith("/pending") || false;
-export const isActionRejected = (action: any) => action?.type?.endsWith("/rejected") || false;
+function isPending(action: any) {
+  return action?.type?.endsWith("/pending") || false;
+}
+
+function isRejected(action: any) {
+  return action?.type?.endsWith("/rejected") || false;
+}
+
+function isSliceName(sliceName: string, action: any) {
+  return action?.type?.startsWith(`${sliceName}/`);
+}
+
+export const isActionPending = (sliceName: string) => {
+  return (action: any) => isSliceName(sliceName, action) && isPending(action);
+};
+export const isActionRejected = (sliceName: string) => {
+  return (action: any) => isSliceName(sliceName, action) && isRejected(action);
+};
 export const getActionName = (action: any) => action?.type?.split("/")[1] || "";

@@ -20,6 +20,7 @@ import styles from "./app.module.css";
 import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { fetchIngredients } from "../../services/ingredientsSlice";
 import ProtectedRoute from "../protected-route/protected-route";
+import { checkUserAuth, loginUser, registerUser } from "../../services/userSlice";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
@@ -32,9 +33,21 @@ function App() {
     navigate(-1);
   };
 
+  const onLogin = (dataUser: { email: string; password: string }) => {
+    dispatch(loginUser(dataUser));
+  };
+
+  const onRegister = (dataUser: { name: string; email: string; password: string }) => {
+    dispatch(registerUser(dataUser));
+  };
+
   // получаем ингредиенты
   useEffect(() => {
     dispatch(fetchIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   return (
@@ -49,11 +62,19 @@ function App() {
           />
           <Route
             path="login"
-            element={<Login />}
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <Login onLogin={onLogin} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="register"
-            element={<Register />}
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <Register onRegister={onRegister} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="forgot-password"
@@ -70,7 +91,7 @@ function App() {
           <Route
             path="profile"
             element={
-              <ProtectedRoute onlyUnAuth={false}>
+              <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
             }>

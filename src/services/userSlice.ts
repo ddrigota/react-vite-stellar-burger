@@ -24,12 +24,15 @@ const initialState = {
 export const checkUserAuth = createAsyncThunk("user/checkUserAuth", async (_, { rejectWithValue, dispatch }) => {
   try {
     const data = await api.getUser();
-    if (!data.success) {
+    if (!data?.success) {
       return rejectWithValue(data);
     }
     return data.user;
   } catch (error) {
-    return rejectWithValue(error);
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("An unknown error occurred");
   } finally {
     dispatch(authCheck());
   }
@@ -84,13 +87,13 @@ const userSlice = createSlice({
         state.data = action.payload;
         state.loginUserRequest = false;
       })
-      .addMatcher(isActionPending, (state: State, action: PayloadAction<any>) => {
+      .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {
         state[`${getActionName(action.type)}Request`] = true;
         state[`${getActionName(action.type)}Error`] = null;
       })
-      .addMatcher(isActionRejected, (state: State, action: PayloadAction<any>) => {
-        state[`${getActionName(action.type)}Request`] = false;
+      .addMatcher(isActionRejected(userSlice.name), (state: State, action: PayloadAction<any>) => {
         state[`${getActionName(action.type)}Error`] = action.payload;
+        state[`${getActionName(action.type)}Request`] = false;
       });
   },
 });
