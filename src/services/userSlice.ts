@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../utils/api";
-import { setCookie } from "../utils/cookie";
+import { deleteCookie, setCookie } from "../utils/cookie";
 import { getActionName, isActionPending, isActionRejected } from "../utils/redux";
 
 type State = {
@@ -65,6 +65,12 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+  await api.logoutUser();
+  deleteCookie("accessToken");
+  deleteCookie("refreshToken");
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -86,6 +92,9 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loginUserRequest = false;
+      })
+      .addCase(logoutUser.fulfilled, state => {
+        state.data = null;
       })
       .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {
         state[`${getActionName(action.type)}Request`] = true;

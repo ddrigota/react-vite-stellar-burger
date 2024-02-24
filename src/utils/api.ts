@@ -58,7 +58,7 @@ class Api {
   }
 
   public async loginUser(data: { email: string; password: string }): Promise<any> {
-    return this.request("auth/login", {
+    return this.requestWithRefresh("auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ class Api {
       throw new Error("Токен не найден");
     }
 
-    return this.request("auth/user", {
+    return this.requestWithRefresh("auth/user", {
       method: "GET",
       credentials: "omit",
       headers: {
@@ -90,6 +90,46 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    });
+  }
+
+  public async forgotPassword(email: string): Promise<any> {
+    return this.request("password-reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+  }
+
+  public async resetPassword(password: string, token: string): Promise<any> {
+    return this.request("password-reset/reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ password, token }),
+    });
+  }
+
+  public async updateUserInfo(data: { email: string; name: string; password: string }): Promise<any> {
+    return this.requestWithRefresh("auth/user", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+
+  public async logoutUser(): Promise<any> {
+    return this.request("auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: getCookie("refreshToken") }),
     });
   }
 }
