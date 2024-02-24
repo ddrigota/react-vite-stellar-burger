@@ -114,10 +114,16 @@ class Api {
   }
 
   public async updateUserInfo(data: { email: string; name: string; password: string }): Promise<any> {
+    const accessToken = getCookie("accessToken");
+    if (!accessToken) {
+      throw new Error("Токен не найден");
+    }
     return this.requestWithRefresh("auth/user", {
       method: "PATCH",
+
       headers: {
         "Content-Type": "application/json",
+        authorization: accessToken,
       },
       body: JSON.stringify(data),
     });

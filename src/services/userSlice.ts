@@ -90,6 +90,17 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
+export const updateUserInfo = createAsyncThunk(
+  "user/updateUserInfo",
+  async (data: { email: string; name: string; password: string }, { rejectWithValue }) => {
+    const response = await api.updateUserInfo(data);
+    if (!response?.success) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -114,6 +125,9 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, state => {
         state.data = null;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.data = action.payload;
       })
 
       .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {

@@ -1,11 +1,15 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
-import { useState } from "react";
-import { useAppSelector } from "../utils/hooks";
+import { useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
+import { checkUserAuth, updateUserInfo } from "../services/userSlice";
 
 function ProfileInfo() {
   const userData = useAppSelector(state => state.user.data);
-  // помогите тут правильно nbgbpbhjdfnm userData на случай если он null
+  const dispatch = useAppDispatch();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // помогите тут правильно типизировать userData на случай если он null
   // по идее, у пользователя никогда не будет доступа к этой странице, если юзера не существует в сторе
   const [formData, setFormData] = useState({
     // @ts-ignore
@@ -14,6 +18,8 @@ function ProfileInfo() {
     email: userData?.email || "",
     password: "",
   });
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [isFormChanged, setIsFormChanged] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,12 +27,37 @@ function ProfileInfo() {
       ...prevState,
       [name]: value,
     }));
+    setIsFormChanged(true);
   };
 
-  const [isDisabled, setIsDisabled] = useState(true);
+  const onCancel = () => {
+    setFormData({
+      // @ts-ignore
+      name: userData?.name || "",
+      // @ts-ignore
+      email: userData?.email || "",
+      password: "",
+    });
+    setIsDisabled(true);
+    setIsFormChanged(false);
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(updateUserInfo(formData));
+    dispatch(checkUserAuth());
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+    setIsFormChanged(false);
+    setIsDisabled(true);
+  };
 
   return (
-    <div className={styles.container}>
+    <form
+      ref={formRef}
+      className={styles.container}
+      onSubmit={onSubmit}>
       <Input
         name="name"
         placeholder="Имя"
@@ -52,21 +83,24 @@ function ProfileInfo() {
         value={formData.password}
         icon="EditIcon"
       />
-      <div className={styles.button_container}>
-        <Button
-          htmlType="button"
-          type="secondary"
-          size="medium">
-          Отменить
-        </Button>
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="medium">
-          Сохранить
-        </Button>
-      </div>
-    </div>
+      {isFormChanged && (
+        <div className={styles.button_container}>
+          <Button
+            htmlType="button"
+            type="secondary"
+            size="medium"
+            onClick={onCancel}>
+            Отменить
+          </Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+            size="medium">
+            Сохранить
+          </Button>
+        </div>
+      )}
+    </form>
   );
 }
 
