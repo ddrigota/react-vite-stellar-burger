@@ -1,4 +1,4 @@
-import { EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
 import { useState } from "react";
 import { useAppSelector } from "../utils/hooks";
@@ -52,6 +52,20 @@ function ProfileInfo() {
         value={formData.password}
         icon="EditIcon"
       />
+      <div className={styles.button_container}>
+        <Button
+          htmlType="button"
+          type="secondary"
+          size="medium">
+          Отменить
+        </Button>
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="medium">
+          Сохранить
+        </Button>
+      </div>
     </div>
   );
 }
