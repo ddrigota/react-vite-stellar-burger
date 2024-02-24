@@ -117,12 +117,12 @@ export const userSlice = createSlice({
       })
 
       .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {
-        state[`${getActionName(action.type)}Request`] = true;
-        state[`${getActionName(action.type)}Error`] = null;
+        state[`${getActionName(action)}Request`] = true;
+        state[`${getActionName(action)}Error`] = null;
       })
       .addMatcher(isActionRejected(userSlice.name), (state: State, action: PayloadAction<any>) => {
-        state[`${getActionName(action.type)}Error`] = action.payload;
-        state[`${getActionName(action.type)}Request`] = false;
+        state[`${getActionName(action)}Error`] = action.payload;
+        state[`${getActionName(action)}Request`] = false;
       });
   },
 });
