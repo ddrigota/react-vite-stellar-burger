@@ -15,7 +15,7 @@ function ForgotPassword() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(forgotPassword(email));
-    navigate("/reset-password");
+    navigate("/reset-password", { state: { fromForgotPassword: true } });
   };
 
   return (

@@ -1,17 +1,24 @@
 import styles from "./forms.module.css";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../utils/hooks";
 import { resetPassword } from "../services/userSlice";
 
 function ResetPassword() {
+  let location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState({
     password: "",
     token: "",
   });
+
+  useEffect(() => {
+    if (!location.state?.fromForgotPassword) {
+      navigate("/forgot-password");
+    }
+  }, [location, navigate]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

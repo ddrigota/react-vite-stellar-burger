@@ -115,6 +115,7 @@ export const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, state => {
         state.data = null;
       })
+
       .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {
         state[`${getActionName(action.type)}Request`] = true;
         state[`${getActionName(action.type)}Error`] = null;
