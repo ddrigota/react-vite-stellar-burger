@@ -103,13 +103,13 @@ class Api {
     });
   }
 
-  public async resetPassword(password: string, token: string): Promise<any> {
+  public async resetPassword(data: { password: string; token: string }): Promise<any> {
     return this.request("password-reset/reset", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ password, token }),
+      body: JSON.stringify(data),
     });
   }
 

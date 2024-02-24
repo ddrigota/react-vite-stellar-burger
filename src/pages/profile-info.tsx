@@ -5,9 +5,13 @@ import { useAppSelector } from "../utils/hooks";
 
 function ProfileInfo() {
   const userData = useAppSelector(state => state.user.data);
+  // помогите тут правильно nbgbpbhjdfnm userData на случай если он null
+  // по идее, у пользователя никогда не будет доступа к этой странице, если юзера не существует в сторе
   const [formData, setFormData] = useState({
-    name: userData.name,
-    email: userData.email,
+    // @ts-ignore
+    name: userData?.name || "",
+    // @ts-ignore
+    email: userData?.email || "",
     password: "",
   });
 

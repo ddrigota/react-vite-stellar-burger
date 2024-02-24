@@ -71,7 +71,26 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
   deleteCookie("refreshToken");
 });
 
-const userSlice = createSlice({
+export const forgotPassword = createAsyncThunk("user/forgotPassword", async (email: string, { rejectWithValue }) => {
+  const data = await api.forgotPassword(email);
+  if (!data?.success) {
+    return rejectWithValue(data);
+  }
+  return data;
+});
+
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (data: { password: string; token: string }, { rejectWithValue }) => {
+    const response = await api.resetPassword(data);
+    if (!response?.success) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
