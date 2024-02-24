@@ -38,7 +38,7 @@
 .list__item {
   padding: 16px 20px;
   min-width: 170px;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.2s ease;
 }
 
 .list__item:hover {
@@ -50,6 +50,13 @@
   gap: 8px;
   text-decoration: none;
   color: inherit;
+  opacity: 0.8;
+  align-items: center;
+  gap: 14px;
+}
+
+.link_active {
+  opacity: 1;
 }
 
 /* @media (max-width: 1000px) {

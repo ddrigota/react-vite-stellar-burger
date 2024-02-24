@@ -1,3 +1,5 @@
+// ВАЖНО! Не принимайте, пожалуйста, работу, если в ней есть серьезные ошибки логики, дальше будет очень сложно их дебажить. Спасибо!
+
 import { useEffect } from "react";
 import {
   Error404,
@@ -57,6 +59,7 @@ function App() {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
+  // проверяем авторизацию
   useEffect(() => {
     dispatch(checkUserAuth());
   }, [dispatch]);
