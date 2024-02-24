@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./app-header.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 
 const AppHeader = () => {
   return (
@@ -24,7 +25,9 @@ const AppHeader = () => {
             </NavLink>
           </li>
         </ul>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <ul className={styles.list_right}>
           <li className={styles.list__item}>
             <NavLink
