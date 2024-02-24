@@ -57,6 +57,20 @@ class Api {
     }
   }
 
+  public async getIngredients(): Promise<any> {
+    return this.request("ingredients");
+  }
+
+  public async postOrder(order: string): Promise<any> {
+    return this.requestWithRefresh("orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: order,
+    });
+  }
+
   public async loginUser(data: { email: string; password: string }): Promise<any> {
     return this.requestWithRefresh("auth/login", {
       method: "POST",
