@@ -21,6 +21,8 @@ import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { fetchIngredients } from "../../services/ingredientsSlice";
 import ProtectedRoute from "../protected-route/protected-route";
 import { checkUserAuth, loginUser, registerUser } from "../../services/userSlice";
+import { closeOrderModal } from "../../services/orderSlice";
+import { clearConstructor } from "../../services/constructorSlice";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
@@ -33,6 +35,15 @@ function App() {
     navigate(-1);
   };
 
+  // по заданию не понятно, что делать с окном заказа, пока оставлю как есть
+  const closeOrderDetails = () => {
+    if (orderDetails.modalIsOpen) {
+      dispatch(closeOrderModal());
+      dispatch(clearConstructor());
+    } else {
+      console.error("Что-то пошло не так");
+    }
+  };
   const onLogin = (dataUser: { email: string; password: string }) => {
     dispatch(loginUser(dataUser));
   };
@@ -113,7 +124,7 @@ function App() {
 
       {orderDetails.modalIsOpen && (
         <Modal
-          closeModal={closeModal}
+          closeModal={closeOrderDetails}
           name="">
           <OrderDetails />
         </Modal>
