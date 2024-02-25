@@ -7,16 +7,21 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./burger-constructor.module.css";
+import { useNavigate } from "react-router";
 
 const BurgerConstructor = () => {
   const ingredients = useAppSelector(state => state.burgerConstructor.ingredients || []);
   const bun = useAppSelector(state => state.burgerConstructor.bun);
   const isLoading = useAppSelector(state => state.order.isLoading);
-  const totalPrice = useAppSelector(state => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice);
+  const totalPrice = useAppSelector(
+    state => state.burgerConstructor.bunPrice + state.burgerConstructor.ingredientsPrice
+  );
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(state => state.user.data);
+  const navigate = useNavigate();
 
   const handleOrderButtonClick = () => {
-    dispatch(postOrder());
+    isLoggedIn ? dispatch(postOrder()) : navigate("/login");
   };
 
   const [{ isHover }, dropTarget] = useDrop({

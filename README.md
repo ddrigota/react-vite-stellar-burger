@@ -10,6 +10,7 @@ A web application to make and order your own futuristic burger
 - Typescript
 - Redux Toolkit
 - React DnD
+- React Router
 - HTML
 - CSS
 

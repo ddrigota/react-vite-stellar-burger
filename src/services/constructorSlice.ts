@@ -71,4 +71,5 @@ const constructorSlice = createSlice({
 const constructorReducer = constructorSlice.reducer;
 
 export default constructorReducer;
-export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor, reorderConstructor } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, setBun, composeOrder, clearConstructor, reorderConstructor } =
+  constructorSlice.actions;
