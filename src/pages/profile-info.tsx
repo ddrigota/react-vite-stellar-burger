@@ -13,12 +13,7 @@ function ProfileInfo() {
   const userData = useAppSelector((state: { user: { data: UserData } }) => state.user.data);
   const dispatch = useAppDispatch();
 
-  const {
-    values: formData,
-    handleChange,
-    isFormChanged,
-    resetForm,
-  } = useForm({
+  const { values, handleChange, isFormChanged, resetForm } = useForm({
     name: userData?.name || "",
     email: userData?.email || "",
     password: "",
@@ -33,7 +28,7 @@ function ProfileInfo() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(updateUserInfo(formData as { name: string; email: string; password: string }));
+    dispatch(updateUserInfo(values as { name: string; email: string; password: string }));
     dispatch(checkUserAuth());
     resetForm();
     setIsDisabled(true);
@@ -47,7 +42,7 @@ function ProfileInfo() {
         name="name"
         placeholder="Имя"
         onChange={handleChange}
-        value={formData.name}
+        value={values.name}
         icon="EditIcon"
         disabled={isDisabled}
         onIconClick={e => {
@@ -58,14 +53,14 @@ function ProfileInfo() {
         name="email"
         placeholder="Логин"
         onChange={handleChange}
-        value={formData.email}
+        value={values.email}
         isIcon={true}
       />
       <PasswordInput
         name="password"
         placeholder="Пароль"
         onChange={handleChange}
-        value={formData.password}
+        value={values.password}
         icon="EditIcon"
       />
       {isFormChanged && (
