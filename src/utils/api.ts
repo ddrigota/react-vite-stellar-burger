@@ -3,7 +3,6 @@ import { getCookie, setCookie } from "./cookie";
 class Api {
   private readonly BASE_URL = "https://norma.nomoreparties.space/api/";
 
-  // не бейте за Promise<any>, я потом допишу, что приходит в каждом ответе от сервера, если понадобится
   private checkResponse(res: Response): Promise<any> {
     if (!res.ok) {
       throw new Error("Ошибка сервера");

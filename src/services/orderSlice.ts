@@ -3,28 +3,28 @@ import { RootState } from "./store";
 import { composeOrder } from "./constructorSlice";
 import api from "../utils/api";
 
-interface OrderResponse {
+interface IOrderResponse {
   success: boolean;
   order: {
     number: number;
   };
 }
 
-interface OrderState {
+interface IOrderState {
   orderNumber: number | null;
   modalIsOpen: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
-const initialState: OrderState = {
+const initialState: IOrderState = {
   orderNumber: null,
   modalIsOpen: false,
   isLoading: false,
   error: null,
 };
 
-export const postOrder = createAsyncThunk<OrderResponse, void, { state: RootState }>(
+export const postOrder = createAsyncThunk<IOrderResponse, void, { state: RootState }>(
   "order/postOrder",
   async (_, { getState, dispatch }) => {
     dispatch(composeOrder());

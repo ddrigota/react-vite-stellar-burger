@@ -1,4 +1,4 @@
-interface CookieProps {
+interface ICookieProps {
   path?: string;
   expires?: number | Date | string;
   [key: string]: string | number | Date | undefined;
@@ -12,7 +12,7 @@ export function getCookie(name: string): string | undefined {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name: string, value: string, props: CookieProps = {}): void {
+export function setCookie(name: string, value: string, props: ICookieProps = {}): void {
   props = {
     path: "/",
     ...props,
