@@ -3,7 +3,6 @@ import { getCookie, setCookie } from "./cookie";
 class Api {
   private readonly BASE_URL = "https://norma.nomoreparties.space/api/";
 
-  // не бейте за Promise<any>, я потом допишу, что приходит в каждом ответе от сервера, если понадобится
   private checkResponse(res: Response): Promise<any> {
     if (!res.ok) {
       throw new Error("Ошибка сервера");
@@ -55,6 +54,20 @@ class Api {
       }
       throw error;
     }
+  }
+
+  public async getIngredients(): Promise<any> {
+    return this.request("ingredients");
+  }
+
+  public async postOrder(order: string): Promise<any> {
+    return this.requestWithRefresh("orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: order,
+    });
   }
 
   public async loginUser(data: { email: string; password: string }): Promise<any> {

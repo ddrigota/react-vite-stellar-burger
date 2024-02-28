@@ -1,15 +1,16 @@
 import styles from "./forms.module.css";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../utils/hooks";
+import { useAppDispatch, useForm } from "../utils/hooks";
 import { resetPassword } from "../services/userSlice";
 
 function ResetPassword() {
   let location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState({
+
+  const { values, handleChange } = useForm({
     password: "",
     token: "",
   });
@@ -20,17 +21,9 @@ function ResetPassword() {
     }
   }, [location, navigate]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(resetPassword(data));
+    await dispatch(resetPassword(values as { password: string; token: string }));
     navigate("/login");
   };
 
@@ -44,14 +37,14 @@ function ResetPassword() {
 
         <PasswordInput
           name="password"
-          onChange={onChange}
-          value={data.password}
+          onChange={handleChange}
+          value={values.password}
           placeholder="Введите новый пароль"
         />
         <Input
           name="token"
-          onChange={onChange}
-          value={data.token}
+          onChange={handleChange}
+          value={values.token}
           placeholder="Введите код из письма"
         />
         <Button

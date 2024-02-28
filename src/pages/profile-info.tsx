@@ -1,68 +1,48 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
-import { useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../utils/hooks";
+import { useAppDispatch, useAppSelector, useForm } from "../utils/hooks";
 import { checkUserAuth, updateUserInfo } from "../services/userSlice";
+import { useState } from "react";
+
+type UserData = {
+  name: string;
+  email: string;
+} | null;
 
 function ProfileInfo() {
-  const userData = useAppSelector(state => state.user.data);
+  const userData = useAppSelector((state: { user: { data: UserData } }) => state.user.data);
   const dispatch = useAppDispatch();
-  const formRef = useRef<HTMLFormElement>(null);
 
-  // помогите тут правильно типизировать userData на случай если он null
-  // по идее, у пользователя никогда не будет доступа к этой странице, если юзера не существует в сторе
-  const [formData, setFormData] = useState({
-    // @ts-ignore
+  const { values, handleChange, isFormChanged, resetForm } = useForm({
     name: userData?.name || "",
-    // @ts-ignore
     email: userData?.email || "",
     password: "",
   });
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [isFormChanged, setIsFormChanged] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setIsFormChanged(true);
-  };
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const onCancel = () => {
-    setFormData({
-      // @ts-ignore
-      name: userData?.name || "",
-      // @ts-ignore
-      email: userData?.email || "",
-      password: "",
-    });
+    resetForm();
     setIsDisabled(true);
-    setIsFormChanged(false);
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(updateUserInfo(formData));
+    dispatch(updateUserInfo(values as { name: string; email: string; password: string }));
     dispatch(checkUserAuth());
-    if (formRef.current) {
-      formRef.current.reset();
-    }
-    setIsFormChanged(false);
+    resetForm();
     setIsDisabled(true);
   };
 
   return (
     <form
-      ref={formRef}
       className={styles.container}
       onSubmit={onSubmit}>
       <Input
         name="name"
         placeholder="Имя"
         onChange={handleChange}
-        value={formData.name}
+        value={values.name}
         icon="EditIcon"
         disabled={isDisabled}
         onIconClick={e => {
@@ -73,14 +53,14 @@ function ProfileInfo() {
         name="email"
         placeholder="Логин"
         onChange={handleChange}
-        value={formData.email}
+        value={values.email}
         isIcon={true}
       />
       <PasswordInput
         name="password"
         placeholder="Пароль"
         onChange={handleChange}
-        value={formData.password}
+        value={values.password}
         icon="EditIcon"
       />
       {isFormChanged && (

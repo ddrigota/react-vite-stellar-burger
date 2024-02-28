@@ -2,14 +2,14 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
 import api from "../utils/api";
 
-interface IngredientsState {
+interface IIngredientsState {
   ingredients: IngredientType[];
   isLoading: boolean;
   error: string | null;
   tab: string;
 }
 
-const initialState: IngredientsState = {
+const initialState: IIngredientsState = {
   ingredients: [],
   isLoading: false,
   error: null,
@@ -17,7 +17,7 @@ const initialState: IngredientsState = {
 };
 
 export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async () => {
-  const response = await api.request("ingredients");
+  const response = await api.getIngredients();
   return response.data;
 });
 

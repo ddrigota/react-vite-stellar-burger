@@ -1,32 +1,25 @@
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forms.module.css";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "../utils/hooks";
 
 interface LoginProps {
   onLogin: (data: { email: string; password: string }) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [userData, setUserData] = useState({
+  const { values, handleChange } = useForm({
     email: "",
     password: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!userData.email || !userData.password) {
+    if (!values.email || !values.password) {
       return;
     }
-    onLogin(userData);
+    onLogin(values as { email: string; password: string });
   };
 
   return (
@@ -38,12 +31,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         <h1 className={`text text_type_main-medium ${styles.heading}`}>Вход</h1>
         <EmailInput
           onChange={handleChange}
-          value={userData.email}
+          value={values.email}
           name="email"
         />
         <PasswordInput
           onChange={handleChange}
-          value={userData.password}
+          value={values.password}
           name="password"
         />
         <Button

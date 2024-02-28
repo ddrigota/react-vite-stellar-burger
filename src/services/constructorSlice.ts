@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IngredientType } from "../utils/types";
 import { v4 as uuidv4 } from "uuid";
 
-interface ConstructorState {
+interface IConstructorState {
   bun: IngredientType | null;
   ingredients: IngredientType[];
   bunPrice: number;
@@ -12,7 +12,7 @@ interface ConstructorState {
   from?: number | undefined;
 }
 
-const initialState: ConstructorState = {
+const initialState: IConstructorState = {
   // плейсхолдер для булки
   bun: {
     _id: "",
