@@ -1,0 +1,17 @@
+.feed__container {
+  margin-top: 40px;
+  width: 1024px;
+}
+
+.orders__container {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+}
+
+.orders {
+  width: 50%;
+  max-height: 65vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
