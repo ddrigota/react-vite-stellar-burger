@@ -1,11 +1,11 @@
 .feed__container {
   margin-top: 40px;
-  width: 1024px;
+  width: 80vw;
 }
 
 .orders__container {
   display: flex;
-  gap: 24px;
+  gap: 60px;
   width: 100%;
 }
 
@@ -14,4 +14,10 @@
   max-height: 65vh;
   overflow-y: auto;
   padding-right: 8px;
+}
+
+.order__status {
+  width: 50%;
+  max-height: 65vh;
+  overflow-y: auto;
 }
