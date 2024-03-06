@@ -43,7 +43,7 @@ function OrderInfo() {
     <>
       {currentOrder && (
         <div className={styles.order_info_container}>
-          <p className="text text_type_digits-default mb-10">{`#${currentOrder.number}`}</p>
+          <p className={`${styles.order_number} text text_type_digits-default mb-10`}>{`#${currentOrder.number}`}</p>
           <h2 className="text text_type_main-medium mb-3">{currentOrder.name}</h2>
           <p
             className="text text_type_main-default mb-15"
