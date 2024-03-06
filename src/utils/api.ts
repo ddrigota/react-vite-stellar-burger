@@ -19,7 +19,7 @@ class Api {
     }
   }
 
-  private async refreshToken(): Promise<any> {
+  public async refreshToken(): Promise<any> {
     return this.request("auth/token", {
       method: "POST",
       headers: {

@@ -14,6 +14,11 @@ export type IngredientType = {
   id?: string;
 };
 
+export type wsConnect = {
+  wsUrl: string;
+  withTokenRefresh: boolean;
+};
+
 export type OrderType = {
   _id: string;
   ingredients: string[];
@@ -23,4 +28,11 @@ export type OrderType = {
   updatedAt: string;
   number: number;
   id?: string;
+};
+
+export type OrderListType = {
+  success: boolean;
+  orders: OrderType[];
+  total: number;
+  totalToday: number;
 };
