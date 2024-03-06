@@ -24,11 +24,11 @@ function OrderSummary() {
 
       <div className={styles.alltime}>
         <p className="text text_type_main-default">Выполнено за все время:</p>{" "}
-        <p className={`${styles.shadow} text text_type_digits-large `}>123456</p>
+        <p className={`${styles.shadow} text text_type_digits-large`}>123456</p>
       </div>
       <div className={styles.today}>
         <p className="text text_type_main-default">Выполнено за сегодня:</p>
-        <p className={`${styles.shadow} text text_type_digits-large `}>123</p>
+        <p className={`${styles.shadow} text text_type_digits-large`}>123</p>
       </div>
     </div>
   );

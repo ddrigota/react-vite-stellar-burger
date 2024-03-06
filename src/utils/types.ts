@@ -13,3 +13,14 @@ export type IngredientType = {
   __v: number;
   id?: string;
 };
+
+export type OrderType = {
+  _id: string;
+  ingredients: string[];
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  id?: string;
+};
