@@ -28,8 +28,8 @@ function Orders() {
         <Order
           key={order._id}
           order={order}
+          url={"/profile/orders"}
           showStatus={true}
-          url="/profile/orders"
         />
       ))}
     </div>

@@ -32,8 +32,9 @@ function Order({ order, url, showStatus = false }: OrderProps) {
         </div>
         <h2 className={`${styles.order__title} text text_type_main-medium`}>{order.name}</h2>
         {showStatus ? (
-          <p className={`${styles.order__status} text text_type_main-default`}>
-            style={{ color: order.status === "done" ? "#0CC" : "" }}
+          <p
+            className={`${styles.order__status} text text_type_main-default`}
+            style={{ color: order.status === "done" ? "#0CC" : "" }}>
             {order.status === "done" ? "Выполнен" : "Готовится"}
           </p>
         ) : null}

@@ -61,10 +61,15 @@ class Api {
   }
 
   public async postOrder(order: string): Promise<any> {
+    const accessToken = getCookie("accessToken");
+    if (!accessToken) {
+      throw new Error("Токен не найден");
+    }
     return this.requestWithRefresh("orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        authorization: accessToken,
       },
       body: order,
     });

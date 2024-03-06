@@ -25,7 +25,7 @@ function OrderInfo() {
           withTokenRefresh: true,
         })
       );
-    } else if (location.pathname.startsWith("/feed") && !background) {
+    } else if (location.pathname.startsWith("/feed") || (location.pathname.startsWith("/profile") && !background)) {
       dispatch(
         wsConnectFeed({
           wsUrl: "wss://norma.nomoreparties.space/orders/",
@@ -53,7 +53,6 @@ function OrderInfo() {
           </p>
           <h3 className="text text_type_main-medium mb-6">Состав:</h3>
           <div className={styles.ingredients_container}>
-            {/* показываем только уникальные ингридиенты */}
             {currentOrder.ingredients
               .reduce((unique: string[], item: string) => {
                 return unique.includes(item) ? unique : [...unique, item];
@@ -67,13 +66,13 @@ function OrderInfo() {
                       className={styles.ingredient}>
                       <div className={styles.ingredient_name}>
                         <IngredientIcon ingredient={ingredient?._id} />
-                        <p className="text text_type_main-default">{ingredient?.name}</p>
+                        <p className="text text_type_main-default">{ingredient.name}</p>
                       </div>
                       <div className={styles.price_container}>
                         <p className="text text_type_digits-default">
                           {`${currentOrder.ingredients.filter(i => i === item).length} x`}
                         </p>
-                        <p className="text text_type_digits-default">{ingredient?.price}</p>
+                        <p className="text text_type_digits-default">{ingredient.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
                     </div>

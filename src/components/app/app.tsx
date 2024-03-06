@@ -127,6 +127,10 @@ function App() {
             />
           </Route>
           <Route
+            path="profile/orders/:id"
+            element={<OrderInfo />}
+          />
+          <Route
             path="*"
             element={<Error404 />}
           />
