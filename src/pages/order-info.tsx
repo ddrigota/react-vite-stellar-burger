@@ -2,7 +2,7 @@ import { useLocation, useParams } from "react-router";
 import styles from "./order-info.module.css";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { useEffect } from "react";
-import { wsConnectFeed } from "../services/feed/actions";
+import { wsConnectFeed, wsDisconnectFeed } from "../services/feed/actions";
 import { wsConnectOrder, wsDisconnectOrder } from "../services/my-orders/actions";
 import IngredientIcon from "../components/ingredient-icon/ingredient-icon";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -35,6 +35,7 @@ function OrderInfo() {
     } else {
       return () => {
         dispatch(wsDisconnectOrder());
+        dispatch(wsDisconnectFeed());
       };
     }
   }, [location.pathname]);

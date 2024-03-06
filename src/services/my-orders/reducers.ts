@@ -13,5 +13,6 @@ export const initialState: OrderState = {
 export const myOrders = createReducer(initialState, builder => {
   builder.addCase(wsMessageOrder, (state, action) => {
     state.data = action.payload;
+    console.log("wsMessageOrder", action.payload);
   });
 });
