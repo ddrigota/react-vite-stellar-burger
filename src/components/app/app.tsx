@@ -24,6 +24,7 @@ import { checkUserAuth, loginUser, registerUser } from "../../services/userSlice
 import { closeOrderModal } from "../../services/orderSlice";
 import { clearConstructor } from "../../services/constructorSlice";
 import Feed from "../../pages/feed";
+import OrderInfo from "../../pages/order-info";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
@@ -104,6 +105,10 @@ function App() {
           <Route
             path="feed"
             element={<Feed />}
+          />
+          <Route
+            path="feed/:id"
+            element={<OrderInfo />}
           />
           <Route
             path="profile"
