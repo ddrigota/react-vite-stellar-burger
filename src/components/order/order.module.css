@@ -16,7 +16,11 @@
 
 .order__title {
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 .ingredients__container {
   display: flex;
   justify-content: space-between;
