@@ -1,3 +1,7 @@
+import { AsyncThunk } from "@reduxjs/toolkit";
+
+type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
+
 function isPending(action: any) {
   return action.type.endsWith("pending");
 }

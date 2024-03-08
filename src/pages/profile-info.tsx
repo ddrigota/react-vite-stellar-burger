@@ -3,17 +3,13 @@ import styles from "./profile-info.module.css";
 import { useAppDispatch, useAppSelector, useForm } from "../utils/hooks";
 import { checkUserAuth, updateUserInfo } from "../services/userSlice";
 import { useState } from "react";
-
-type UserData = {
-  name: string;
-  email: string;
-} | null;
+import { UserRegisterType } from "../utils/types";
 
 function ProfileInfo() {
-  const userData = useAppSelector((state: { user: { data: UserData } }) => state.user.data);
+  const userData = useAppSelector(state => state.user.data);
   const dispatch = useAppDispatch();
 
-  const { values, handleChange, isFormChanged, resetForm } = useForm({
+  const { values, handleChange, isFormChanged, resetForm, setIsFormChanged } = useForm({
     name: userData?.name || "",
     email: userData?.email || "",
     password: "",
@@ -28,10 +24,10 @@ function ProfileInfo() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(updateUserInfo(values as { name: string; email: string; password: string }));
+    dispatch(updateUserInfo(values as UserRegisterType));
     dispatch(checkUserAuth());
-    resetForm();
     setIsDisabled(true);
+    setIsFormChanged(false);
   };
 
   return (

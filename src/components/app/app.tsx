@@ -25,6 +25,7 @@ import { closeOrderModal } from "../../services/orderSlice";
 import { clearConstructor } from "../../services/constructorSlice";
 import Feed from "../../pages/feed";
 import OrderInfo from "../../pages/order-info";
+import { UserLoginType, UserRegisterType } from "../../utils/types";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
@@ -45,11 +46,11 @@ function App() {
       console.error("Что-то пошло не так");
     }
   };
-  const onLogin = (dataUser: { email: string; password: string }) => {
+  const onLogin = (dataUser: UserLoginType) => {
     dispatch(loginUser(dataUser));
   };
 
-  const onRegister = (dataUser: { name: string; email: string; password: string }) => {
+  const onRegister = (dataUser: UserRegisterType) => {
     dispatch(registerUser(dataUser));
   };
 

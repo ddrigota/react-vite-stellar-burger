@@ -36,3 +36,50 @@ export type OrderListType = {
   total: number;
   totalToday: number;
 };
+
+type ServerResponse<T> = {
+  success: boolean;
+} & T;
+
+export type UserType = {
+  email: string;
+  name: string;
+};
+
+export type UserLoginType = {
+  email: string;
+  password: string;
+};
+
+export type UserRegisterType = {
+  password: string;
+} & UserType;
+
+export type UserResponseType = ServerResponse<{
+  user: UserType;
+}>;
+
+export type UserResponseWithTokenType = ServerResponse<{
+  user: UserType;
+  accessToken: string;
+  refreshToken: string;
+}>;
+
+export type RefreshResponseWithTokenType = ServerResponse<{
+  accessToken: string;
+  refreshToken: string;
+}>;
+
+export type UserResetPasswordType = {
+  password: string;
+  token: string;
+};
+
+export type UserForgotPasswordType = {
+  email: string;
+};
+
+export type OrderResponseType = ServerResponse<{
+  name: string;
+  order: OrderType;
+}>;

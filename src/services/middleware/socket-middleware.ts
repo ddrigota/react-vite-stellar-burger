@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import api from "../../utils/api";
 import { setCookie } from "../../utils/cookie";
-import { OrderListType, wsConnect } from "../../utils/types";
+import { OrderListType, RefreshResponseWithTokenType, wsConnect } from "../../utils/types";
 
 type TWsActions = {
   wsConnect: ActionCreatorWithPayload<wsConnect>;
@@ -62,11 +62,12 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
             api
               .refreshToken()
               .then(refreshData => {
-                console.log("refreshData", refreshData);
-                setCookie("refreshToken", refreshData.refreshToken);
-                setCookie("accessToken", refreshData.accessToken);
+                const typedRefreshData = refreshData as RefreshResponseWithTokenType;
+                console.log("refreshData", typedRefreshData);
+                setCookie("refreshToken", typedRefreshData.refreshToken);
+                setCookie("accessToken", typedRefreshData.accessToken);
                 const newWsUrl = new URL(wsUrl);
-                newWsUrl.searchParams.set("token", refreshData.accessToken.replace("Bearer ", ""));
+                newWsUrl.searchParams.set("token", typedRefreshData.accessToken.replace("Bearer ", ""));
                 dispatch(wsConnect({ wsUrl: newWsUrl.href.toString(), withTokenRefresh }));
               })
               .catch(err => {

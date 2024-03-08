@@ -1,13 +1,32 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, SerializedError, createSlice } from "@reduxjs/toolkit";
 import api from "../utils/api";
 import { deleteCookie, setCookie } from "../utils/cookie";
 import { getActionName, isActionPending, isActionRejected } from "../utils/redux";
+import {
+  UserLoginType,
+  UserRegisterType,
+  UserResetPasswordType,
+  UserResponseType,
+  UserResponseWithTokenType,
+  UserType,
+} from "../utils/types";
+import { createAsyncThunk } from "../utils/hooks";
 
 type State = {
-  [key: string]: boolean | null;
+  isAuthChecked: boolean;
+  data: UserType | null;
+
+  regiserUserError: SerializedError | null;
+  registerUserRequest: boolean;
+
+  loginUserError: SerializedError | null;
+  loginUserRequest: boolean;
+
+  getUserError: SerializedError | null;
+  getUserRequest: boolean;
 };
 
-const initialState = {
+const initialState: State = {
   isAuthChecked: false,
   data: null,
 
@@ -21,26 +40,29 @@ const initialState = {
   getUserRequest: false,
 };
 
-export const checkUserAuth = createAsyncThunk("user/checkUserAuth", async (_, { rejectWithValue, dispatch }) => {
-  try {
-    const data = await api.getUser();
-    if (!data?.success) {
-      return rejectWithValue(data);
+export const checkUserAuth = createAsyncThunk<UserType>(
+  "user/checkUserAuth",
+  async (_, { extra: api, rejectWithValue, dispatch }) => {
+    try {
+      const data = await api.getUser();
+      if (!data?.success) {
+        return rejectWithValue(data);
+      }
+      return data.user;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred");
+    } finally {
+      dispatch(authCheck());
     }
-    return data.user;
-  } catch (error) {
-    if (error instanceof Error) {
-      return rejectWithValue(error.message);
-    }
-    return rejectWithValue("An unknown error occurred");
-  } finally {
-    dispatch(authCheck());
   }
-});
+);
 
-export const registerUser = createAsyncThunk(
+export const registerUser = createAsyncThunk<UserType, UserRegisterType>(
   "user/registerUser",
-  async (dataUser: { email: string; password: string; name: string }, { rejectWithValue }) => {
+  async (dataUser, { extra: api, rejectWithValue }) => {
     const data = await api.registerUser(dataUser);
     console.log("response", data);
     if (!data?.success) {
@@ -52,9 +74,9 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk<UserType, UserLoginType>(
   "user/loginUser",
-  async (dataUser: { email: string; password: string }, { rejectWithValue }) => {
+  async (dataUser, { extra: api, rejectWithValue }) => {
     const data = await api.loginUser(dataUser);
     if (!data?.success) {
       return rejectWithValue(data);
@@ -65,23 +87,26 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+export const logoutUser = createAsyncThunk<void, void>("user/logoutUser", async () => {
   await api.logoutUser();
   deleteCookie("accessToken");
   deleteCookie("refreshToken");
 });
 
-export const forgotPassword = createAsyncThunk("user/forgotPassword", async (email: string, { rejectWithValue }) => {
-  const data = await api.forgotPassword(email);
-  if (!data?.success) {
-    return rejectWithValue(data);
+export const forgotPassword = createAsyncThunk<UserResponseWithTokenType, string>(
+  "user/forgotPassword",
+  async (email, { rejectWithValue }) => {
+    const data = await api.forgotPassword(email);
+    if (!data?.success) {
+      return rejectWithValue(data);
+    }
+    return data;
   }
-  return data;
-});
+);
 
-export const resetPassword = createAsyncThunk(
+export const resetPassword = createAsyncThunk<UserResponseType, UserResetPasswordType>(
   "user/resetPassword",
-  async (data: { password: string; token: string }, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     const response = await api.resetPassword(data);
     if (!response?.success) {
       return rejectWithValue(response);
@@ -90,9 +115,9 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-export const updateUserInfo = createAsyncThunk(
+export const updateUserInfo = createAsyncThunk<UserResponseType, UserRegisterType>(
   "user/updateUserInfo",
-  async (data: { email: string; name: string; password: string }, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     const response = await api.updateUserInfo(data);
     if (!response?.success) {
       return rejectWithValue(response);
@@ -127,15 +152,19 @@ export const userSlice = createSlice({
         state.data = null;
       })
       .addCase(updateUserInfo.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload.user;
       })
 
       .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {
+        // @ts-ignore
         state[`${getActionName(action)}Request`] = true;
+        // @ts-ignore
         state[`${getActionName(action)}Error`] = null;
       })
       .addMatcher(isActionRejected(userSlice.name), (state: State, action: PayloadAction<any>) => {
+        // @ts-ignore
         state[`${getActionName(action)}Error`] = action.payload;
+        // @ts-ignore
         state[`${getActionName(action)}Request`] = false;
       });
   },
