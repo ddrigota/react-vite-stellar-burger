@@ -21,7 +21,7 @@ function Order({ order, url, showStatus = false }: OrderProps) {
   return (
     <Link
       to={`${url}/${order._id}`}
-      state={{ background: location }}
+      state={{ backgroundLocation: location }}
       className={styles.order__link}>
       <div className={styles.order__container}>
         <div className={styles.order__data}>

@@ -156,6 +156,26 @@ function App() {
               </Modal>
             }
           />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal
+                closeModal={closeModal}
+                name="Детали Заказа">
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal
+                closeModal={closeModal}
+                name="Детали Заказа">
+                <OrderInfo />
+              </Modal>
+            }
+          />
         </Routes>
       )}
     </div>
