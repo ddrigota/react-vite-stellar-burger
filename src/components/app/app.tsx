@@ -127,7 +127,11 @@ function App() {
           </Route>
           <Route
             path="profile/orders/:id"
-            element={<OrderInfo />}
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="*"
