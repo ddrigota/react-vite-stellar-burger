@@ -37,7 +37,6 @@ function App() {
     navigate(-1);
   };
 
-  // по заданию не понятно, что делать с окном заказа, пока оставлю как есть
   const closeOrderDetails = () => {
     if (orderDetails.modalIsOpen) {
       dispatch(closeOrderModal());

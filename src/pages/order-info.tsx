@@ -6,6 +6,7 @@ import { wsConnectOrder, wsDisconnectOrder } from "../services/my-orders/actions
 import IngredientIcon from "../components/ingredient-icon/ingredient-icon";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { calculatePrice } from "../utils/utility-functions";
+import { wsConnectFeed, wsDisconnectFeed } from "../services/feed/actions";
 
 function OrderInfo() {
   const dispatch = useAppDispatch();
@@ -19,14 +20,14 @@ function OrderInfo() {
   useEffect(() => {
     if ((location.pathname.startsWith("/profile") || location.pathname.startsWith("/feed")) && !background) {
       dispatch(
-        wsConnectOrder({
+        wsConnectFeed({
           wsUrl: "wss://norma.nomoreparties.space/orders/all",
           withTokenRefresh: true,
         })
       );
     } else {
       return () => {
-        dispatch(wsDisconnectOrder());
+        dispatch(wsDisconnectFeed());
       };
     }
   }, [location.pathname]);
