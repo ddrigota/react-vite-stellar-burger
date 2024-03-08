@@ -2,7 +2,6 @@ import { useLocation, useParams } from "react-router";
 import styles from "./order-info.module.css";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { useEffect } from "react";
-import { wsConnectFeed, wsDisconnectFeed } from "../services/feed/actions";
 import { wsConnectOrder, wsDisconnectOrder } from "../services/my-orders/actions";
 import IngredientIcon from "../components/ingredient-icon/ingredient-icon";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,30 +11,22 @@ function OrderInfo() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { id } = useParams();
-  const background = location.state as { backgroundLocation?: Location };
+  const background = location.state?.background;
   const allOrders = useAppSelector(state => state.feed.data?.orders);
   const allIngredients = useAppSelector(state => state.burgerIngredients.ingredients);
   const currentOrder = allOrders?.find(item => item._id === id);
 
   useEffect(() => {
-    if (location.pathname.startsWith("/profile") && !background) {
+    if ((location.pathname.startsWith("/profile") || location.pathname.startsWith("/feed")) && !background) {
       dispatch(
         wsConnectOrder({
           wsUrl: "wss://norma.nomoreparties.space/orders/all",
           withTokenRefresh: true,
         })
       );
-    } else if (location.pathname.startsWith("/feed") || (location.pathname.startsWith("/profile") && !background)) {
-      dispatch(
-        wsConnectFeed({
-          wsUrl: "wss://norma.nomoreparties.space/orders/",
-          withTokenRefresh: true,
-        })
-      );
     } else {
       return () => {
         dispatch(wsDisconnectOrder());
-        dispatch(wsDisconnectFeed());
       };
     }
   }, [location.pathname]);
