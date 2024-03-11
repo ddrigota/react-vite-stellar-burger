@@ -107,7 +107,7 @@ function App() {
             element={<Feed />}
           />
           <Route
-            path="feed/:id"
+            path="feed/:number"
             element={<OrderInfo />}
           />
           <Route
