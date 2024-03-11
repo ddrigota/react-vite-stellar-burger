@@ -155,6 +155,7 @@ export const userSlice = createSlice({
         state.data = action.payload.user;
       })
 
+      // тут я не нашел решения по тиаизации
       .addMatcher(isActionPending(userSlice.name), (state: any, action: PayloadAction<any>) => {
         state[`${getActionName(action)}Request`] = true;
         state[`${getActionName(action)}Error`] = null;

@@ -11,6 +11,7 @@ A web application to make and order your own futuristic burger
 - Redux Toolkit
 - React DnD
 - React Router
+- WebSocket
 - HTML
 - CSS
 
