@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from "./cookie";
 import {
+  GetOrderType,
   IngredientType,
   OrderResponseType,
   RefreshResponseWithTokenType,
@@ -164,8 +165,8 @@ export class Api {
     });
   }
 
-  public async getOrder(orderNumber: string): Promise<any> {
-    return this.request(`orders/${orderNumber}`, {
+  public async getOrder(orderNumber: string) {
+    return this.request<GetOrderType>(`orders/${orderNumber}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -83,3 +83,7 @@ export type OrderResponseType = ServerResponse<{
   name: string;
   order: OrderType;
 }>;
+
+export type GetOrderType = ServerResponse<{
+  orders: OrderType[];
+}>;

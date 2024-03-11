@@ -155,16 +155,12 @@ export const userSlice = createSlice({
         state.data = action.payload.user;
       })
 
-      .addMatcher(isActionPending(userSlice.name), (state: State, action: PayloadAction<any>) => {
-        // @ts-ignore
+      .addMatcher(isActionPending(userSlice.name), (state: any, action: PayloadAction<any>) => {
         state[`${getActionName(action)}Request`] = true;
-        // @ts-ignore
         state[`${getActionName(action)}Error`] = null;
       })
-      .addMatcher(isActionRejected(userSlice.name), (state: State, action: PayloadAction<any>) => {
-        // @ts-ignore
+      .addMatcher(isActionRejected(userSlice.name), (state: any, action: PayloadAction<any>) => {
         state[`${getActionName(action)}Error`] = action.payload;
-        // @ts-ignore
         state[`${getActionName(action)}Request`] = false;
       });
   },
