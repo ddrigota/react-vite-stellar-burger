@@ -173,11 +173,13 @@ function App() {
           <Route
             path="/profile/orders/:number"
             element={
-              <Modal
-                closeModal={closeModal}
-                name="Детали Заказа">
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute>
+                <Modal
+                  closeModal={closeModal}
+                  name="Детали Заказа">
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>
