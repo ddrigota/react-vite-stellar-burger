@@ -18,9 +18,12 @@ function Order({ order, url, showStatus = false }: OrderProps) {
   const location = useLocation();
   const maxNumberOfIngredients = 6;
 
+  // Я переписал здесь логику ссылки, чтобы она формировала URL не по Id заказа, а по его номеру.
+  // Чтобы впоследствии реализовать запрос заказа через API, а не через WS
+
   return (
     <Link
-      to={`${url}/${order._id}`}
+      to={`${url}/${order.number}`}
       state={{ backgroundLocation: location }}
       className={styles.order__link}>
       <div className={styles.order__container}>

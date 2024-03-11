@@ -127,7 +127,7 @@ function App() {
             />
           </Route>
           <Route
-            path="profile/orders/:id"
+            path="profile/orders/:number"
             element={
               <ProtectedRoute>
                 <OrderInfo />
@@ -161,7 +161,7 @@ function App() {
             }
           />
           <Route
-            path="/feed/:id"
+            path="/feed/:number"
             element={
               <Modal
                 closeModal={closeModal}
@@ -171,7 +171,7 @@ function App() {
             }
           />
           <Route
-            path="/profile/orders/:id"
+            path="/profile/orders/:number"
             element={
               <Modal
                 closeModal={closeModal}

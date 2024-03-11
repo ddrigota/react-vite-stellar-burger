@@ -163,6 +163,15 @@ export class Api {
       body: JSON.stringify({ token: getCookie("refreshToken") }),
     });
   }
+
+  public async getOrder(orderNumber: string): Promise<any> {
+    return this.request(`orders/${orderNumber}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      } as HeadersInit,
+    });
+  }
 }
 
 const api = new Api();
