@@ -64,7 +64,7 @@ export const registerUser = createAsyncThunk<UserType, UserRegisterType>(
   "user/registerUser",
   async (dataUser, { extra: api, rejectWithValue }) => {
     const data = await api.registerUser(dataUser);
-    console.log("response", data);
+    // console.log("response", data);
     if (!data?.success) {
       return rejectWithValue(data);
     }

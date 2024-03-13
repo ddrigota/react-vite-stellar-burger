@@ -48,7 +48,7 @@ export class Api {
       const res = await this.request<T>(endpoint, options);
       return res;
     } catch (error) {
-      console.log("requestWithRefresh");
+      // console.log("requestWithRefresh");
       if ((error as ErrorApi).statusCode === 401 || (error as ErrorApi).statusCode === 403) {
         const refreshData: RefreshResponseWithTokenType = await this.refreshToken();
         if (!refreshData.success) {

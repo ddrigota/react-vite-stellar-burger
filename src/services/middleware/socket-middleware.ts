@@ -38,7 +38,7 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
       }
       if (socket) {
         socket.onopen = event => {
-          console.log("socket.onopen", event);
+          // console.log("socket.onopen", event);
           dispatch(wsOpen());
         };
         socket.onerror = event => {
@@ -63,7 +63,7 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
               .refreshToken()
               .then(refreshData => {
                 const typedRefreshData = refreshData as RefreshResponseWithTokenType;
-                console.log("refreshData", typedRefreshData);
+                // console.log("refreshData", typedRefreshData);
                 setCookie("refreshToken", typedRefreshData.refreshToken);
                 setCookie("accessToken", typedRefreshData.accessToken);
                 const newWsUrl = new URL(wsUrl);
