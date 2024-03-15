@@ -1,8 +1,8 @@
 import { SpinnerRoundFilled } from "spinners-react";
-import { addIngredient, setBun } from "../../services/constructorSlice";
+import { addIngredient, setBun } from "../../services/constructor/constructorSlice";
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientType } from "../../utils/types";
-import { postOrder } from "../../services/orderSlice";
+import { postOrder } from "../../services/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import IngredientItem from "../ingredient-item/ingredient-item";

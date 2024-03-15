@@ -7,7 +7,7 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import { calculatePrice } from "../utils/utility-functions";
 
 import { SpinnerCircular } from "spinners-react";
-import { getOrder } from "../services/orderSlice";
+import { getOrder } from "../services/order/orderSlice";
 
 function OrderInfo() {
   const dispatch = useAppDispatch();

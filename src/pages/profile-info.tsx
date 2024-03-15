@@ -1,7 +1,7 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
 import { useAppDispatch, useAppSelector, useForm } from "../utils/hooks";
-import { checkUserAuth, updateUserInfo } from "../services/userSlice";
+import { checkUserAuth, updateUserInfo } from "../services/user/userSlice";
 import { useState } from "react";
 import { UserRegisterType } from "../utils/types";
 

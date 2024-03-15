@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useForm } from "../utils/hooks";
-import { resetPassword } from "../services/userSlice";
+import { resetPassword } from "../services/user/userSlice";
 
 function ResetPassword() {
   let location = useLocation();

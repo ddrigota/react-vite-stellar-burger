@@ -1,7 +1,7 @@
 import { PayloadAction, SerializedError, createSlice } from "@reduxjs/toolkit";
-import api from "../utils/api";
-import { deleteCookie, setCookie } from "../utils/cookie";
-import { getActionName, isActionPending, isActionRejected } from "../utils/redux";
+import api from "../../utils/api";
+import { deleteCookie, setCookie } from "../../utils/cookie";
+import { getActionName, isActionPending, isActionRejected } from "../../utils/redux";
 import {
   UserLoginType,
   UserRegisterType,
@@ -9,8 +9,8 @@ import {
   UserResponseType,
   UserResponseWithTokenType,
   UserType,
-} from "../utils/types";
-import { createAsyncThunk } from "../utils/hooks";
+} from "../../utils/types";
+import { createAsyncThunk } from "../../utils/hooks";
 
 type State = {
   isAuthChecked: boolean;
@@ -26,7 +26,7 @@ type State = {
   getUserRequest: boolean;
 };
 
-const initialState: State = {
+export const initialState: State = {
   isAuthChecked: false,
   data: null,
 

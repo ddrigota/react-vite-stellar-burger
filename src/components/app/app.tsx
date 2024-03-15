@@ -18,11 +18,11 @@ import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
 
 import { Route, Routes, useLocation, useNavigate } from "react-router";
-import { fetchIngredients } from "../../services/ingredientsSlice";
+import { fetchIngredients } from "../../services/ingredients/ingredientsSlice";
 import ProtectedRoute from "../protected-route/protected-route";
-import { checkUserAuth, loginUser, registerUser } from "../../services/userSlice";
-import { closeOrderModal } from "../../services/orderSlice";
-import { clearConstructor } from "../../services/constructorSlice";
+import { checkUserAuth, loginUser, registerUser } from "../../services/user/userSlice";
+import { closeOrderModal } from "../../services/order/orderSlice";
+import { clearConstructor } from "../../services/constructor/constructorSlice";
 import Feed from "../../pages/feed";
 import OrderInfo from "../../pages/order-info";
 import { UserLoginType, UserRegisterType } from "../../utils/types";

@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import ingredientsSlice from "./ingredientsSlice";
-import constructorSlice from "./constructorSlice";
-import orderSlice from "./orderSlice";
-import userSlice from "./userSlice";
+import ingredientsSlice from "./ingredients/ingredientsSlice";
+import constructorSlice from "./constructor/constructorSlice";
+import orderSlice from "./order/orderSlice";
+import userSlice from "./user/userSlice";
 import {
   wsCloseFeed,
   wsConnectFeed,

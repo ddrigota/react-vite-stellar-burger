@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./store";
-import { composeOrder } from "./constructorSlice";
-import api from "../utils/api";
-import { OrderType } from "../utils/types";
+import { RootState } from "../store";
+import { composeOrder } from "../constructor/constructorSlice";
+import api from "../../utils/api";
+import { OrderType } from "../../utils/types";
 
 interface IOrderResponse {
   success: boolean;
@@ -19,7 +19,7 @@ interface IOrderState {
   error: string | null;
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   orderNumber: null,
   currentOrder: null,
   modalIsOpen: false,
