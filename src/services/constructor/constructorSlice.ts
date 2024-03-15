@@ -12,7 +12,7 @@ interface IConstructorState {
   from?: number | undefined;
 }
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   // плейсхолдер для булки
   bun: {
     _id: "",
