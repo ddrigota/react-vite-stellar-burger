@@ -1,7 +1,7 @@
 import type { XYCoord } from "dnd-core";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAppDispatch } from "../../utils/hooks";
-import { removeIngredient, reorderConstructor } from "../../services/constructorSlice";
+import { removeIngredient, reorderConstructor } from "../../services/constructor/constructorSlice";
 import { IngredientType } from "../../utils/types";
 import styles from "./ingredient-item.module.css";
 import { useDrag, useDrop } from "react-dnd";

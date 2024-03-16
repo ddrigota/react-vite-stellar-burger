@@ -18,11 +18,14 @@ import OrderDetails from "../order-details/order-details";
 import styles from "./app.module.css";
 
 import { Route, Routes, useLocation, useNavigate } from "react-router";
-import { fetchIngredients } from "../../services/ingredientsSlice";
+import { fetchIngredients } from "../../services/ingredients/ingredientsSlice";
 import ProtectedRoute from "../protected-route/protected-route";
-import { checkUserAuth, loginUser, registerUser } from "../../services/userSlice";
-import { closeOrderModal } from "../../services/orderSlice";
-import { clearConstructor } from "../../services/constructorSlice";
+import { checkUserAuth, loginUser, registerUser } from "../../services/user/userSlice";
+import { closeOrderModal } from "../../services/order/orderSlice";
+import { clearConstructor } from "../../services/constructor/constructorSlice";
+import Feed from "../../pages/feed";
+import OrderInfo from "../../pages/order-info";
+import { UserLoginType, UserRegisterType } from "../../utils/types";
 
 function App() {
   const orderDetails = useAppSelector(state => state.order);
@@ -35,7 +38,6 @@ function App() {
     navigate(-1);
   };
 
-  // по заданию не понятно, что делать с окном заказа, пока оставлю как есть
   const closeOrderDetails = () => {
     if (orderDetails.modalIsOpen) {
       dispatch(closeOrderModal());
@@ -44,11 +46,11 @@ function App() {
       console.error("Что-то пошло не так");
     }
   };
-  const onLogin = (dataUser: { email: string; password: string }) => {
+  const onLogin = (dataUser: UserLoginType) => {
     dispatch(loginUser(dataUser));
   };
 
-  const onRegister = (dataUser: { name: string; email: string; password: string }) => {
+  const onRegister = (dataUser: UserRegisterType) => {
     dispatch(registerUser(dataUser));
   };
 
@@ -101,6 +103,14 @@ function App() {
             element={<IngredientDetails />}
           />
           <Route
+            path="feed"
+            element={<Feed />}
+          />
+          <Route
+            path="feed/:number"
+            element={<OrderInfo />}
+          />
+          <Route
             path="profile"
             element={
               <ProtectedRoute>
@@ -116,6 +126,14 @@ function App() {
               element={<Orders />}
             />
           </Route>
+          <Route
+            path="profile/orders/:number"
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="*"
             element={<Error404 />}
@@ -137,9 +155,31 @@ function App() {
             element={
               <Modal
                 closeModal={closeModal}
-                name="Детали Ингридиента">
+                name="Детали Ингредиента">
                 <IngredientDetails />
               </Modal>
+            }
+          />
+          <Route
+            path="/feed/:number"
+            element={
+              <Modal
+                closeModal={closeModal}
+                name="Детали Заказа">
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:number"
+            element={
+              <ProtectedRoute>
+                <Modal
+                  closeModal={closeModal}
+                  name="Детали Заказа">
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>

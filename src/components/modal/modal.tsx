@@ -28,12 +28,19 @@ const Modal = ({ children, name, closeModal }: Props) => {
   return createPortal(
     <>
       <ModalOverlay onMouseDown={closeModal} />
-      <div className={styles.modal}>
-        <h2 className={`${styles.modal_heading} text text_type_main-medium`}>{name}</h2>
+      <div
+        className={styles.modal}
+        data-cy="modal">
+        <h2
+          className={`${styles.modal_heading} text text_type_main-medium`}
+          data-cy="modal-heading">
+          {name}
+        </h2>
         <button
           type="button"
           className={styles.close_button}
-          onClick={closeModal}>
+          onClick={closeModal}
+          data-cy="close-modal">
           <CloseIcon type="primary" />
         </button>
         <div className={styles.children_container}>{children}</div>

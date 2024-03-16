@@ -1,42 +1,56 @@
 import { getCookie, setCookie } from "./cookie";
+import {
+  GetOrderType,
+  IngredientType,
+  OrderResponseType,
+  RefreshResponseWithTokenType,
+  UserLoginType,
+  UserRegisterType,
+  UserResetPasswordType,
+  UserResponseType,
+  UserResponseWithTokenType,
+} from "./types";
 
-class Api {
-  private readonly BASE_URL = "https://norma.nomoreparties.space/api/";
+interface ErrorApi extends Error {
+  statusCode: number;
+}
+export class Api {
+  public readonly BASE_URL = "https://norma.nomoreparties.space/api/";
 
-  private checkResponse(res: Response): Promise<any> {
+  private checkResponse<T>(res: Response): Promise<T> {
     if (!res.ok) {
       throw new Error("Ошибка сервера");
     }
     return res.json();
   }
 
-  public async request(endpoint: string, options: RequestInit = {}): Promise<any> {
+  public async request<T>(endpoint: string, options: RequestInit = {}) {
     try {
       const res = await fetch(this.BASE_URL + endpoint, options);
-      return this.checkResponse(res);
+      return this.checkResponse<T>(res);
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  private async refreshToken(): Promise<any> {
-    return this.request("auth/token", {
+  public async refreshToken() {
+    return this.request<UserResponseWithTokenType>("auth/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify({ token: getCookie("refreshToken") }),
     });
   }
 
-  public async requestWithRefresh(endpoint: string, options: RequestInit = {}): Promise<any> {
+  public async requestWithRefresh<T>(endpoint: string, options: RequestInit = {}) {
     try {
-      const res = await this.request(endpoint, options);
+      const res = await this.request<T>(endpoint, options);
       return res;
     } catch (error) {
-      console.log("requestWithRefresh");
-      if ((error as any).statusCode === 401 || (error as any).statusCode === 403) {
-        const refreshData = await this.refreshToken();
+      // console.log("requestWithRefresh");
+      if ((error as ErrorApi).statusCode === 401 || (error as ErrorApi).statusCode === 403) {
+        const refreshData: RefreshResponseWithTokenType = await this.refreshToken();
         if (!refreshData.success) {
           return Promise.reject(refreshData);
         }
@@ -44,111 +58,119 @@ class Api {
         setCookie("accessToken", refreshData.accessToken);
         setCookie("refreshToken", refreshData.refreshToken);
 
-        return await this.request(endpoint, {
+        return await this.request<T>(endpoint, {
           ...options,
           headers: {
             ...options.headers,
-            authorization: refreshData.accessToken,
-          },
+            authorization: getCookie("accessToken") as string,
+          } as HeadersInit,
         });
       }
       throw error;
     }
   }
 
-  public async getIngredients(): Promise<any> {
+  public async getIngredients(): Promise<{ data: IngredientType[] }> {
     return this.request("ingredients");
   }
 
-  public async postOrder(order: string): Promise<any> {
-    return this.requestWithRefresh("orders", {
+  public async postOrder(order: string) {
+    const accessToken = getCookie("accessToken");
+    if (!accessToken) {
+      throw new Error("Токен не найден");
+    }
+    return this.request<OrderResponseType>("orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-      },
+        authorization: accessToken,
+      } as HeadersInit,
       body: order,
     });
   }
 
-  public async loginUser(data: { email: string; password: string }): Promise<any> {
-    return this.requestWithRefresh("auth/login", {
+  public async loginUser(data: UserLoginType) {
+    return this.request<UserResponseWithTokenType>("auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify(data),
     });
   }
 
-  public async getUser(): Promise<any> {
-    const accessToken = getCookie("accessToken");
-    if (!accessToken) {
-      throw new Error("Токен не найден");
-    }
-
-    return this.requestWithRefresh("auth/user", {
-      method: "GET",
-      credentials: "omit",
+  public async getUser() {
+    const dataUser = await this.requestWithRefresh<UserResponseType>("auth/user", {
       headers: {
-        "Content-Type": "application/json",
-        authorization: accessToken,
-      },
+        authorization: getCookie("accessToken") as string,
+      } as HeadersInit,
     });
+    if (dataUser?.success) return dataUser;
+    return Promise.reject(dataUser);
   }
 
-  public async registerUser(data: { email: string; password: string; name: string }): Promise<any> {
-    return this.request("auth/register", {
+  public async registerUser(data: UserRegisterType) {
+    return this.request<UserResponseWithTokenType>("auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify(data),
     });
   }
 
-  public async forgotPassword(email: string): Promise<any> {
-    return this.request("password-reset", {
+  public async forgotPassword(email: string) {
+    return this.request<UserResponseWithTokenType>("password-reset", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify({ email }),
     });
   }
 
-  public async resetPassword(data: { password: string; token: string }): Promise<any> {
-    return this.request("password-reset/reset", {
+  public async resetPassword(data: UserResetPasswordType) {
+    return this.request<UserResponseType>("password-reset/reset", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify(data),
     });
   }
 
-  public async updateUserInfo(data: { email: string; name: string; password: string }): Promise<any> {
+  // TODO: fix
+  public async updateUserInfo(data: UserRegisterType) {
     const accessToken = getCookie("accessToken");
     if (!accessToken) {
       throw new Error("Токен не найден");
     }
-    return this.requestWithRefresh("auth/user", {
+    return this.requestWithRefresh<UserResponseWithTokenType>("auth/user", {
       method: "PATCH",
-
       headers: {
         "Content-Type": "application/json",
         authorization: accessToken,
-      },
+      } as HeadersInit,
       body: JSON.stringify(data),
     });
   }
 
-  public async logoutUser(): Promise<any> {
+  public async logoutUser(): Promise<void> {
     return this.request("auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify({ token: getCookie("refreshToken") }),
+    });
+  }
+
+  public async getOrder(orderNumber: string) {
+    return this.request<GetOrderType>(`orders/${orderNumber}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      } as HeadersInit,
     });
   }
 }

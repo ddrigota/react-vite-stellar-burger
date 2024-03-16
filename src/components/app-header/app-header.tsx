@@ -19,7 +19,7 @@ const AppHeader = () => {
           <li className={styles.list__item}>
             <NavLink
               className={({ isActive }) => (isActive ? `${styles.link_active} ${styles.link}` : styles.link)}
-              to="/orders">
+              to="/feed">
               <ListIcon type="secondary" />
               <span className={`${styles.link__text} text text_type_main-default`}>Лента заказов</span>
             </NavLink>

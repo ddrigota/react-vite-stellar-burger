@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import IngredientsGroup from "../ingredients-group/ingredients-group";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { setCurrentTab } from "../../services/ingredientsSlice";
+import { setCurrentTab } from "../../services/ingredients/ingredientsSlice";
 import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = () => {
@@ -80,7 +80,9 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.ingredients__container}`}>
+      <div
+        className={`${styles.ingredients__container}`}
+        data-cy="ingredients">
         <IngredientsGroup
           title="Булки"
           ingredients={buns}

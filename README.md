@@ -3,6 +3,7 @@
 ## Description
 
 A web application to make and order your own futuristic burger
+[Check out here](https://ddrigota.github.io/react-stellar-burger)
 
 ## Technologies
 
@@ -11,6 +12,9 @@ A web application to make and order your own futuristic burger
 - Redux Toolkit
 - React DnD
 - React Router
+- WebSocket
+- Jest
+- Cypress
 - HTML
 - CSS
 

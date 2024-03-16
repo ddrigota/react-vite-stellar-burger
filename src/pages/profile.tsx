@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile.module.css";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../services/userSlice";
+import { logoutUser } from "../services/user/userSlice";
 
 function Profile() {
   const dispatch = useDispatch();
