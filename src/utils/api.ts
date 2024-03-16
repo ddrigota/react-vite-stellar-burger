@@ -15,7 +15,7 @@ interface ErrorApi extends Error {
   statusCode: number;
 }
 export class Api {
-  private readonly BASE_URL = "https://norma.nomoreparties.space/api/";
+  public readonly BASE_URL = "https://norma.nomoreparties.space/api/";
 
   private checkResponse<T>(res: Response): Promise<T> {
     if (!res.ok) {

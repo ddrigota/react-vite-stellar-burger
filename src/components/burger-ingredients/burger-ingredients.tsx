@@ -80,7 +80,9 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.ingredients__container}`}>
+      <div
+        className={`${styles.ingredients__container}`}
+        data-cy="ingredients">
         <IngredientsGroup
           title="Булки"
           ingredients={buns}

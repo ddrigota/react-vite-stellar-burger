@@ -155,7 +155,7 @@ function App() {
             element={
               <Modal
                 closeModal={closeModal}
-                name="Детали Ингридиента">
+                name="Детали Ингредиента">
                 <IngredientDetails />
               </Modal>
             }

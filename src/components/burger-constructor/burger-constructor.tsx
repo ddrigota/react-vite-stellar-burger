@@ -41,20 +41,25 @@ const BurgerConstructor = () => {
   return (
     <div
       className={styles.container}
-      ref={dropTarget}>
+      ref={dropTarget}
+      data-cy="constructor">
       <div
         className={styles.burger_container}
         style={{ outline: isHover ? "4px dashed #4C4CFF" : "none" }}>
         {bun && (
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price || 0}
-            thumbnail={bun.image}
-          />
+          <div data-cy="bun-top">
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price || 0}
+              thumbnail={bun.image}
+            />
+          </div>
         )}
-        <ul className={`${styles.сonstructor_list}`}>
+        <ul
+          className={`${styles.сonstructor_list}`}
+          data-cy="constructor-ingredients">
           {ingredients.map((ingredient, index) => (
             <IngredientItem
               key={ingredient.id}
@@ -64,13 +69,16 @@ const BurgerConstructor = () => {
           ))}
         </ul>
         {bun && (
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price || 0}
-            thumbnail={bun.image}
-          />
+          <div data-cy="bun-bottom">
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price || 0}
+              thumbnail={bun.image}
+              data-cy="bun-bottom"
+            />
+          </div>
         )}
       </div>
       <div className={styles.price_container}>

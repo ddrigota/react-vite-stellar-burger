@@ -5,7 +5,12 @@ interface Props {
 }
 
 const ModalOverlay = ({ onMouseDown }: Props) => {
-  return <div className={styles.overlay} onMouseDown={onMouseDown}></div>;
+  return (
+    <div
+      className={styles.overlay}
+      onMouseDown={onMouseDown}
+      data-cy="modal-overlay"></div>
+  );
 };
 
 export default ModalOverlay;
