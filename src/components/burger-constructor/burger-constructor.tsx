@@ -91,6 +91,7 @@ const BurgerConstructor = () => {
           size="large"
           htmlType="button"
           id="order_button"
+          data-cy="order-button"
           extraClass={styles.order_button}
           onClick={handleOrderButtonClick}
           disabled={ingredients.length === 0 || !bun || bun._id === ""}>
