@@ -3,6 +3,7 @@
 ## Description
 
 A web application to make and order your own futuristic burger
+[Check out here](https://ddrigota.github.io/)
 
 ## Technologies
 
@@ -12,6 +13,8 @@ A web application to make and order your own futuristic burger
 - React DnD
 - React Router
 - WebSocket
+- Jest
+- Cypress
 - HTML
 - CSS
 
