@@ -14,17 +14,13 @@ describe("ingredientsSlice", () => {
         payload: response.data,
       })
     ).toEqual({
+      ...initialState,
       ingredients: data,
-      isLoading: false,
-      error: null,
-      tab: "buns",
     });
   });
   test("set current tab", () => {
     expect(ingredientsSlice(initialState, { type: "burger-ingredients/setCurrentTab", payload: "sauces" })).toEqual({
-      ingredients: [],
-      isLoading: false,
-      error: null,
+      ...initialState,
       tab: "sauces",
     });
   });
