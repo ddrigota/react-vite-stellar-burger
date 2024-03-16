@@ -3,7 +3,7 @@
 ## Description
 
 A web application to make and order your own futuristic burger
-[Check out here](https://ddrigota.github.io/react-stellar-burger)
+[Check out here](https://react-stellar-burger-blond.vercel.app/)
 
 ## Technologies
 
