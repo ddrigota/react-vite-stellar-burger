@@ -69,7 +69,9 @@ const BurgerConstructor = () => {
               />
             ))
           ) : (
-            <p className={`${styles.text_no_ingredients}`}>Перетащите ингредиенты сюда</p>
+            <p className={`${styles.text_no_ingredients} text text_type_main-default text_color_inactive`}>
+              Перетащите ингредиенты сюда
+            </p>
           )}
         </ul>
         {bun && (
