@@ -60,13 +60,17 @@ const BurgerConstructor = () => {
         <ul
           className={`${styles.сonstructor_list}`}
           data-cy="constructor-ingredients">
-          {ingredients.map((ingredient, index) => (
-            <IngredientItem
-              key={ingredient.id}
-              ingredient={ingredient}
-              index={index}
-            />
-          ))}
+          {ingredients.length > 0 ? (
+            ingredients.map((ingredient, index) => (
+              <IngredientItem
+                key={ingredient.id}
+                ingredient={ingredient}
+                index={index}
+              />
+            ))
+          ) : (
+            <p className={`${styles.text_no_ingredients}`}>Перетащите ингредиенты сюда</p>
+          )}
         </ul>
         {bun && (
           <div data-cy="bun-bottom">
