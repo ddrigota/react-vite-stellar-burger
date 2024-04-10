@@ -22,6 +22,7 @@ This project was created as a learing tool for modern react SPA.
 - HTML
 - CSS modules
 - React 18
+- Vite
 - Typescript
 - Redux Toolkit
 - React DnD
