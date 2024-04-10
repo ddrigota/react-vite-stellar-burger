@@ -48,3 +48,7 @@ npm i
 ```bash
 npm start
 ```
+
+## Next Steps
+- Create a functional mobile version with touch controls
+- Build my own API
