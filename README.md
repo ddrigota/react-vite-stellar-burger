@@ -5,8 +5,22 @@
 A web application to make and order your own futuristic burger
 [Check out here](https://vite-stellar-burger.vercel.app/)
 
-## Technologies
+## Functionality
 
+- Creating your own burger with drag and drop
+- Sorting ingredients
+- Posting orders
+- Wiewing current and all time orders via websocket
+- Authorization, creating and managing your account 
+  
+## Purpose
+
+This project was created as a learing tool for modern react SPA.
+
+## Stack
+
+- HTML
+- CSS modules
 - React 18
 - Typescript
 - Redux Toolkit
@@ -15,8 +29,7 @@ A web application to make and order your own futuristic burger
 - WebSocket
 - Jest
 - Cypress
-- HTML
-- CSS
+
 
 ## Installation
 
