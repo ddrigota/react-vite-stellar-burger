@@ -1,4 +1,4 @@
-import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import IngredientIcon from "../components/ingredient-icon/ingredient-icon";
@@ -69,7 +69,7 @@ function OrderInfo() {
             </div>
             <div className={styles.total}>
               <p className="text text_type_main-default text_color_inactive">
-                <FormattedDate date={new Date(currentOrder.createdAt)} /> i-GMT+3
+                {new Date(currentOrder.createdAt).toDateString()}
               </p>
               <div className={styles.price_container}>
                 <p className="text text_type_digits-default">{calculatePrice(currentOrder, allIngredients)}</p>
