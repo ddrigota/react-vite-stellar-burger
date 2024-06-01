@@ -12,6 +12,7 @@ export type IngredientType = {
   image_large: string;
   __v: number;
   id?: string;
+  translatedName?: string;
 };
 
 export type wsConnect = {
