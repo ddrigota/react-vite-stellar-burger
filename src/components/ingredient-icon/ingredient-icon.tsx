@@ -8,8 +8,12 @@ interface IngredientIconProps {
 }
 
 function IngredientIcon({ ingredient, counter }: IngredientIconProps) {
-  const allIngredients = useAppSelector(store => store.burgerIngredients.ingredients);
-  const currentIngredient: IngredientType | undefined = allIngredients.find(item => item._id === ingredient);
+  const allIngredients = useAppSelector(
+    (store) => store.burgerIngredients.ingredients,
+  );
+  const currentIngredient: IngredientType | undefined = allIngredients.find(
+    (item) => item._id === ingredient,
+  );
   if (!currentIngredient) {
     return null;
   }
@@ -21,7 +25,11 @@ function IngredientIcon({ ingredient, counter }: IngredientIconProps) {
         src={currentIngredient.image}
         alt={currentIngredient.name}
       />
-      {counter ? <p className={`${styles.counter} text text_type_main-default`}>{`+${counter}`}</p> : null}
+      {counter ? (
+        <p
+          className={`${styles.counter} text text_type_main-default`}
+        >{`+${counter}`}</p>
+      ) : null}
     </div>
   );
 }

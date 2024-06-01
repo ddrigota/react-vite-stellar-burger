@@ -8,12 +8,14 @@ import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = () => {
   const dispatch = useAppDispatch();
-  const currentTab = useAppSelector(state => state.burgerIngredients.tab);
-  const ingredients = useAppSelector(state => state.burgerIngredients.ingredients);
+  const currentTab = useAppSelector((state) => state.burgerIngredients.tab);
+  const ingredients = useAppSelector(
+    (state) => state.burgerIngredients.ingredients,
+  );
 
-  const buns = ingredients.filter(item => item.type === "bun");
-  const sauces = ingredients.filter(item => item.type === "sauce");
-  const mains = ingredients.filter(item => item.type === "main");
+  const buns = ingredients.filter((item) => item.type === "bun");
+  const sauces = ingredients.filter((item) => item.type === "sauce");
+  const mains = ingredients.filter((item) => item.type === "main");
 
   const bunsRef = useRef<HTMLDivElement>(null);
   const saucesRef = useRef<HTMLDivElement>(null);
@@ -26,15 +28,15 @@ const BurgerIngredients = () => {
     const mainsNode = mainsRef.current;
 
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           // без проверки на document.readyState === "complete" при первой загрузке страницы таб переключается на "Начинки"
           if (entry.isIntersecting && document.readyState === "complete") {
             dispatch(setCurrentTab(entry.target.id));
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     bunsNode && observer.observe(bunsNode);
@@ -50,7 +52,9 @@ const BurgerIngredients = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={`${styles.heading} text text_type_main-large`}>Соберите бургер</h1>
+      <h1 className={`${styles.heading} text text_type_main-large`}>
+        Build a burger
+      </h1>
       <div className={styles.tab__container}>
         <Tab
           value="buns"
@@ -58,8 +62,9 @@ const BurgerIngredients = () => {
           onClick={() => {
             setCurrentTab("buns");
             bunsRef.current?.scrollIntoView({ behavior: "smooth" });
-          }}>
-          Булки
+          }}
+        >
+          Buns
         </Tab>
         <Tab
           value="sauces"
@@ -67,8 +72,9 @@ const BurgerIngredients = () => {
           onClick={() => {
             setCurrentTab("sauces");
             saucesRef.current?.scrollIntoView({ behavior: "smooth" });
-          }}>
-          Соусы
+          }}
+        >
+          Sauces
         </Tab>
         <Tab
           value="main"
@@ -76,27 +82,27 @@ const BurgerIngredients = () => {
           onClick={() => {
             setCurrentTab("main");
             mainsRef.current?.scrollIntoView({ behavior: "smooth" });
-          }}>
-          Начинки
+          }}
+        >
+          Mains
         </Tab>
       </div>
-      <div
-        className={`${styles.ingredients__container}`}
-        data-cy="ingredients">
+      <div className={`${styles.ingredients__container}`} data-cy="ingredients">
         <IngredientsGroup
-          title="Булки"
+          title="Buns"
+
           ingredients={buns}
           id="buns"
           ref={bunsRef}
         />
         <IngredientsGroup
-          title="Соусы"
+          title="Sauces"
           ingredients={sauces}
           id="sauces"
           ref={saucesRef}
         />
         <IngredientsGroup
-          title="Начинки"
+          title="Mains"
           ingredients={mains}
           id="main"
           ref={mainsRef}

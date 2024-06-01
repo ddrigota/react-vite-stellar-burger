@@ -1,4 +1,9 @@
-import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Button,
+  EmailInput,
+  Input,
+  PasswordInput,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
 import { useAppDispatch, useAppSelector, useForm } from "../utils/hooks";
 import { checkUserAuth, updateUserInfo } from "../services/user/userSlice";
@@ -6,14 +11,15 @@ import { useState } from "react";
 import { UserRegisterType } from "../utils/types";
 
 function ProfileInfo() {
-  const userData = useAppSelector(state => state.user.data);
+  const userData = useAppSelector((state) => state.user.data);
   const dispatch = useAppDispatch();
 
-  const { values, handleChange, isFormChanged, resetForm, setIsFormChanged } = useForm({
-    name: userData?.name || "",
-    email: userData?.email || "",
-    password: "",
-  });
+  const { values, handleChange, isFormChanged, resetForm, setIsFormChanged } =
+    useForm({
+      name: userData?.name || "",
+      email: userData?.email || "",
+      password: "",
+    });
 
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -31,30 +37,28 @@ function ProfileInfo() {
   };
 
   return (
-    <form
-      className={styles.container}
-      onSubmit={onSubmit}>
+    <form className={styles.container} onSubmit={onSubmit}>
       <Input
         name="name"
-        placeholder="Имя"
+        placeholder="Name"
         onChange={handleChange}
         value={values.name}
         icon="EditIcon"
         disabled={isDisabled}
-        onIconClick={e => {
+        onIconClick={(e) => {
           setIsDisabled(!isDisabled);
         }}
       />
       <EmailInput
         name="email"
-        placeholder="Логин"
+        placeholder="E-mail"
         onChange={handleChange}
         value={values.email}
         isIcon={true}
       />
       <PasswordInput
         name="password"
-        placeholder="Пароль"
+        placeholder="Password"
         onChange={handleChange}
         value={values.password}
         icon="EditIcon"
@@ -65,14 +69,12 @@ function ProfileInfo() {
             htmlType="button"
             type="secondary"
             size="medium"
-            onClick={onCancel}>
-            Отменить
+            onClick={onCancel}
+          >
+            Cancel
           </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-            size="medium">
-            Сохранить
+          <Button htmlType="submit" type="primary" size="medium">
+            Save
           </Button>
         </div>
       )}

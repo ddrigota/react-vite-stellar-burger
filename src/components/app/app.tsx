@@ -20,7 +20,11 @@ import styles from "./app.module.css";
 import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { fetchIngredients } from "../../services/ingredients/ingredientsSlice";
 import ProtectedRoute from "../protected-route/protected-route";
-import { checkUserAuth, loginUser, registerUser } from "../../services/user/userSlice";
+import {
+  checkUserAuth,
+  loginUser,
+  registerUser,
+} from "../../services/user/userSlice";
 import { closeOrderModal } from "../../services/order/orderSlice";
 import { clearConstructor } from "../../services/constructor/constructorSlice";
 import Feed from "../../pages/feed";
@@ -28,7 +32,7 @@ import OrderInfo from "../../pages/order-info";
 import { UserLoginType, UserRegisterType } from "../../utils/types";
 
 function App() {
-  const orderDetails = useAppSelector(state => state.order);
+  const orderDetails = useAppSelector((state) => state.order);
   const location = useLocation();
   let navigate = useNavigate();
   let state = location.state as { backgroundLocation?: Location };
@@ -43,7 +47,7 @@ function App() {
       dispatch(closeOrderModal());
       dispatch(clearConstructor());
     } else {
-      console.error("Что-то пошло не так");
+      console.error("Something went wrong");
     }
   };
   const onLogin = (dataUser: UserLoginType) => {
@@ -54,12 +58,12 @@ function App() {
     dispatch(registerUser(dataUser));
   };
 
-  // получаем ингредиенты
+  // get ingredients
   useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
-  // проверяем авторизацию
+  // check auth
   useEffect(() => {
     dispatch(checkUserAuth());
   }, [dispatch]);
@@ -67,13 +71,8 @@ function App() {
   return (
     <div className={styles.app}>
       <Routes location={state?.backgroundLocation || location}>
-        <Route
-          path="/"
-          element={<Layout />}>
-          <Route
-            index
-            element={<HomePage />}
-          />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
           <Route
             path="login"
             element={
@@ -90,41 +89,21 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="forgot-password"
-            element={<ForgotPassword />}
-          />
-          <Route
-            path="reset-password"
-            element={<ResetPassword />}
-          />
-          <Route
-            path="ingredients/:id"
-            element={<IngredientDetails />}
-          />
-          <Route
-            path="feed"
-            element={<Feed />}
-          />
-          <Route
-            path="feed/:number"
-            element={<OrderInfo />}
-          />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="ingredients/:id" element={<IngredientDetails />} />
+          <Route path="feed" element={<Feed />} />
+          <Route path="feed/:number" element={<OrderInfo />} />
           <Route
             path="profile"
             element={
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
-            }>
-            <Route
-              index
-              element={<ProfileInfo />}
-            />
-            <Route
-              path="orders"
-              element={<Orders />}
-            />
+            }
+          >
+            <Route index element={<ProfileInfo />} />
+            <Route path="orders" element={<Orders />} />
           </Route>
           <Route
             path="profile/orders/:number"
@@ -134,17 +113,12 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="*"
-            element={<Error404 />}
-          />
+          <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
 
       {orderDetails.modalIsOpen && (
-        <Modal
-          closeModal={closeOrderDetails}
-          name="">
+        <Modal closeModal={closeOrderDetails} name="">
           <OrderDetails />
         </Modal>
       )}
@@ -153,9 +127,7 @@ function App() {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal
-                closeModal={closeModal}
-                name="Детали Ингредиента">
+              <Modal closeModal={closeModal} name="Ingredient details">
                 <IngredientDetails />
               </Modal>
             }
@@ -163,9 +135,7 @@ function App() {
           <Route
             path="/feed/:number"
             element={
-              <Modal
-                closeModal={closeModal}
-                name="Детали Заказа">
+              <Modal closeModal={closeModal} name="Order details">
                 <OrderInfo />
               </Modal>
             }
@@ -174,9 +144,7 @@ function App() {
             path="/profile/orders/:number"
             element={
               <ProtectedRoute>
-                <Modal
-                  closeModal={closeModal}
-                  name="Детали Заказа">
+                <Modal closeModal={closeModal} name="Order details">
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

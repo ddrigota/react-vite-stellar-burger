@@ -51,9 +51,10 @@ const BurgerConstructor = () => {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${bun.name} (верх)`}
+              text={`${bun.name} `}
               price={bun.price || 0}
               thumbnail={bun.image}
+              extraClass={styles.bun}
             />
           </div>
         )}
@@ -70,7 +71,7 @@ const BurgerConstructor = () => {
             ))
           ) : (
             <p className={`${styles.text_no_ingredients} text text_type_main-default text_color_inactive`}>
-              Перетащите ингредиенты сюда
+              Drag ingredients here
             </p>
           )}
         </ul>
@@ -79,9 +80,10 @@ const BurgerConstructor = () => {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name} (низ)`}
+              text={`${bun.name} `}
               price={bun.price || 0}
               thumbnail={bun.image}
+              extraClass={styles.bun}
               data-cy="bun-bottom"
             />
           </div>
@@ -108,7 +110,7 @@ const BurgerConstructor = () => {
               color="#fff"
             />
           ) : (
-            "Оформить заказ"
+            "Order"
           )}
         </Button>
       </div>

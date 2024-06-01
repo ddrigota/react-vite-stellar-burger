@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
 import styles from "./app-header.module.css";
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
 const AppHeader = () => {
@@ -10,18 +15,32 @@ const AppHeader = () => {
         <ul className={styles.list_left}>
           <li className={styles.list__item}>
             <NavLink
-              className={({ isActive }) => (isActive ? `${styles.link_active} ${styles.link}` : styles.link)}
-              to="/">
+              className={({ isActive }) =>
+                isActive ? `${styles.link_active} ${styles.link}` : styles.link
+              }
+              to="/"
+            >
               <BurgerIcon type="primary" />
-              <span className={`${styles.link__text} text text_type_main-default`}>Конструктор</span>
+              <span
+                className={`${styles.link__text} text text_type_main-default`}
+              >
+                Your Burger
+              </span>
             </NavLink>
           </li>
           <li className={styles.list__item}>
             <NavLink
-              className={({ isActive }) => (isActive ? `${styles.link_active} ${styles.link}` : styles.link)}
-              to="/feed">
+              className={({ isActive }) =>
+                isActive ? `${styles.link_active} ${styles.link}` : styles.link
+              }
+              to="/feed"
+            >
               <ListIcon type="secondary" />
-              <span className={`${styles.link__text} text text_type_main-default`}>Лента заказов</span>
+              <span
+                className={`${styles.link__text} text text_type_main-default`}
+              >
+                Orders feed
+              </span>
             </NavLink>
           </li>
         </ul>
@@ -31,10 +50,17 @@ const AppHeader = () => {
         <ul className={styles.list_right}>
           <li className={styles.list__item}>
             <NavLink
-              className={({ isActive }) => (isActive ? `${styles.link_active} ${styles.link}` : styles.link)}
-              to="/profile">
+              className={({ isActive }) =>
+                isActive ? `${styles.link_active} ${styles.link}` : styles.link
+              }
+              to="/profile"
+            >
               <ProfileIcon type="secondary" />
-              <span className={`${styles.link__text} text text_type_main-default`}>Личный кабинет</span>
+              <span
+                className={`${styles.link__text} text text_type_main-default`}
+              >
+                Account
+              </span>
             </NavLink>
           </li>
         </ul>

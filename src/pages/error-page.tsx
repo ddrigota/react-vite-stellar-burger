@@ -6,14 +6,15 @@ function Error404() {
     <div className={styles.error}>
       <h1 className={`${styles.heading} text text_type_digits-large`}>404</h1>
       <p className={`${styles.text} text text_type_main-medium`}>
-        Кажется, такой страницы не существует
+        Not Found
       </p>
       <Button
         htmlType="button"
         type="primary"
         size="large"
-        onClick={() => window.history.back()}>
-        Вернуться
+        onClick={() => window.history.back()}
+      >
+        Go back
       </Button>
     </div>
   );

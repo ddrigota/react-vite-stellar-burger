@@ -12,8 +12,8 @@ interface ProtectedRouteProps {
 function ProtectedRoute({ children, onlyUnAuth }: ProtectedRouteProps) {
   const location = useLocation();
 
-  const user = useAppSelector(state => state.user.data);
-  const isAuthChecked = useAppSelector(state => state.user.isAuthChecked);
+  const user = useAppSelector((state) => state.user.data);
+  const isAuthChecked = useAppSelector((state) => state.user.isAuthChecked);
 
   if (!isAuthChecked) {
     console.log("waiting for user");
@@ -27,25 +27,14 @@ function ProtectedRoute({ children, onlyUnAuth }: ProtectedRouteProps) {
   if (onlyUnAuth && user) {
     console.log("navigate from login to home page");
     const from = location.state?.from || { pathname: "/" };
-    const backgroundLocation = location.state?.from?.state?.backgroundLocation || null;
-    return (
-      <Navigate
-        replace
-        to={from}
-        state={{ backgroundLocation }}
-      />
-    );
+    const backgroundLocation =
+      location.state?.from?.state?.backgroundLocation || null;
+    return <Navigate replace to={from} state={{ backgroundLocation }} />;
   }
 
   if (!onlyUnAuth && !user) {
     console.log("navigate from home page to login");
-    return (
-      <Navigate
-        replace
-        to={"/login"}
-        state={{ from: location }}
-      />
-    );
+    return <Navigate replace to={"/login"} state={{ from: location }} />;
   }
 
   console.log("render children");

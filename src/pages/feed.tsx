@@ -8,14 +8,14 @@ import { wsConnectFeed, wsDisconnectFeed } from "../services/feed/actions";
 function Feed() {
   const dispatch = useAppDispatch();
   const wsUrl = "wss://norma.nomoreparties.space/orders/all";
-  const orders = useAppSelector(store => store.feed.data);
+  const orders = useAppSelector((store) => store.feed.data);
 
   useEffect(() => {
     dispatch(
       wsConnectFeed({
         wsUrl: wsUrl,
         withTokenRefresh: true,
-      })
+      }),
     );
     return () => {
       dispatch(wsDisconnectFeed());
@@ -24,15 +24,11 @@ function Feed() {
 
   return (
     <main className={styles.feed__container}>
-      <h1 className="text text_type_main-medium mb-4">Лента заказов</h1>
+      <h1 className="text text_type_main-medium mb-4">Order feed</h1>
       <div className={styles.orders__container}>
         <section className={styles.orders}>
-          {orders?.orders.map(order => (
-            <Order
-              order={order}
-              url={"/feed"}
-              key={order._id}
-            />
+          {orders?.orders.map((order) => (
+            <Order order={order} url={"/feed"} key={order._id} />
           ))}
         </section>
         <section className={styles.order__status}>

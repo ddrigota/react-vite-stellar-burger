@@ -1,4 +1,9 @@
-import { Button, Input, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Button,
+  Input,
+  EmailInput,
+  PasswordInput,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forms.module.css";
 import { ChangeEvent, useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
@@ -32,16 +37,15 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
 
   return (
     <div className={styles.form_container}>
-      <form
-        action="#"
-        className={styles.form}
-        onSubmit={handleSubmit}>
-        <h1 className={`text text_type_main-medium ${styles.heading}`}>Регистрация</h1>
+      <form action="#" className={styles.form} onSubmit={handleSubmit}>
+        <h1 className={`text text_type_main-medium ${styles.heading}`}>
+          Sign Up
+        </h1>
         <Input
           onChange={handleChange}
           value={userData.name}
           name="name"
-          placeholder="Имя"
+          placeholder="Name"
         />
         <EmailInput
           onChange={handleChange}
@@ -52,20 +56,18 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
           onChange={handleChange}
           value={userData.password}
           name="password"
+          placeholder="Password"
         />
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large">
-          Зарегистрироваться
+        <Button htmlType="submit" type="primary" size="large">
+          Sign Up
         </Button>
-        <div className={`${styles.text_container} text text_type_main-default text_color_inactive`}>
+        <div
+          className={`${styles.text_container} text text_type_main-default text_color_inactive`}
+        >
           <p className={styles.text}>
-            Уже зарегистрированы?{" "}
-            <Link
-              to="/login"
-              className={styles.link}>
-              Войти
+            Already a user?{" "}
+            <Link to="/login" className={styles.link}>
+              Log in
             </Link>
           </p>
         </div>
