@@ -30,7 +30,7 @@ function Order({ order, url, showStatus = false }: OrderProps) {
             {new Date(order.createdAt).toDateString()}
           </p>
         </div>
-        <h2 className={`${styles.order__title} text text_type_main-medium`}>{order.name}</h2>
+        <h2 className={`${styles.order__title} text text_type_main-medium`}>{`Order #${order.number} `}</h2>
         {showStatus ? (
           <p
             className={`${styles.order__status} text text_type_main-default`}
