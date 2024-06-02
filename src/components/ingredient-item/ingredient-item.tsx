@@ -72,7 +72,7 @@ const IngredientItem: React.FC<IngredientItemProps> = ({ ingredient, index }) =>
       <DragIcon type="primary" />
       <ConstructorElement
         isLocked={false}
-        text={ingredient.translatedName}
+        text={ingredient.translatedName || ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
         handleClose={() => dispatch(removeIngredient(ingredient._id))}
