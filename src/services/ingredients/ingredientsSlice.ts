@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../utils/api";
-import translateText from "../../utils/translate";
+import { data } from "../../utils/data";
 import { IngredientType } from "../../utils/types";
 
 interface IIngredientsState {
@@ -19,13 +19,14 @@ export const initialState: IIngredientsState = {
 
 export const fetchIngredients = createAsyncThunk("burger-ingredients/fetchIngredients", async () => {
   const response = await api.getIngredients();
-  const data = await Promise.all(
-    response.data.map(async ingredient => ({
+  const dataWithTranslatedName = response.data.map(ingredient => {
+    const foundData = data.find(d => d.name === ingredient.name);
+    return {
       ...ingredient,
-      translatedName: await translateText(ingredient.name),
-    }))
-  );
-  return data;
+      translatedName: foundData ? foundData.translatedName : ingredient.name,
+    };
+  });
+  return dataWithTranslatedName;
 });
 
 const ingredientsSlice = createSlice({
