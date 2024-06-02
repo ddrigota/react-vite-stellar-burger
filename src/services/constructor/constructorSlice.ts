@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IngredientType } from "../../utils/types";
 import { v4 as uuidv4 } from "uuid";
+import { IngredientType } from "../../utils/types";
 
 interface IConstructorState {
   bun: IngredientType | null;
@@ -16,6 +16,7 @@ export const initialState: IConstructorState = {
   bun: {
     _id: "",
     name: "Choose bun",
+    translatedName: "Choose bun",
     type: "bun",
     proteins: 0,
     fat: 0,

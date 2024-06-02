@@ -22,6 +22,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
     "spinners-react": "^1.0.7",
+    "translate": "^3.0.0",
     "uuid": "^8.3.2",
     "vite": "^5.1.6",
     "vite-plugin-svgr": "^4.2.0",

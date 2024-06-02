@@ -1,13 +1,13 @@
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router";
 import { SpinnerRoundFilled } from "spinners-react";
 import { addIngredient, setBun } from "../../services/constructor/constructorSlice";
-import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IngredientType } from "../../utils/types";
 import { postOrder } from "../../services/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { useDrop } from "react-dnd";
+import { IngredientType } from "../../utils/types";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./burger-constructor.module.css";
-import { useNavigate } from "react-router";
 
 const BurgerConstructor = () => {
   const ingredients = useAppSelector(state => state.burgerConstructor.ingredients || []);
@@ -51,7 +51,7 @@ const BurgerConstructor = () => {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${bun.name} `}
+              text={`${bun.translatedName} `}
               price={bun.price || 0}
               thumbnail={bun.image}
               extraClass={styles.bun}
@@ -80,7 +80,7 @@ const BurgerConstructor = () => {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name} `}
+              text={`${bun.translatedName} `}
               price={bun.price || 0}
               thumbnail={bun.image}
               extraClass={styles.bun}

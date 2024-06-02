@@ -1,27 +1,18 @@
+import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import type { XYCoord } from "dnd-core";
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useRef } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { removeIngredient, reorderConstructor } from "../../services/constructor/constructorSlice";
 import { useAppDispatch } from "../../utils/hooks";
-import {
-  removeIngredient,
-  reorderConstructor,
-} from "../../services/constructor/constructorSlice";
 import { IngredientType } from "../../utils/types";
 import styles from "./ingredient-item.module.css";
-import { useDrag, useDrop } from "react-dnd";
-import { useRef } from "react";
 
 interface IngredientItemProps {
   ingredient: IngredientType;
   index: number;
 }
 
-const IngredientItem: React.FC<IngredientItemProps> = ({
-  ingredient,
-  index,
-}) => {
+const IngredientItem: React.FC<IngredientItemProps> = ({ ingredient, index }) => {
   const dispatch = useAppDispatch();
   const id = ingredient.id;
   const ref = useRef<HTMLLIElement>(null);
@@ -51,8 +42,7 @@ const IngredientItem: React.FC<IngredientItemProps> = ({
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
 
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
 
@@ -75,11 +65,14 @@ const IngredientItem: React.FC<IngredientItemProps> = ({
   drag(drop(ref));
 
   return (
-    <li className={`${styles.сonstructor_item}`} ref={ref} style={{ opacity }}>
+    <li
+      className={`${styles.сonstructor_item}`}
+      ref={ref}
+      style={{ opacity }}>
       <DragIcon type="primary" />
       <ConstructorElement
         isLocked={false}
-        text={ingredient.name}
+        text={ingredient.translatedName}
         price={ingredient.price}
         thumbnail={ingredient.image}
         handleClose={() => dispatch(removeIngredient(ingredient._id))}
