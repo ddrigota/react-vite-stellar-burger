@@ -32,13 +32,15 @@ function OrderInfo() {
         currentOrder && (
           <div className={styles.order_info_container}>
             <p className={`${styles.order_number} text text_type_digits-default mb-10`}>{`#${currentOrder.number}`}</p>
-            <h2 className="text text_type_main-medium mb-3">{currentOrder.name}</h2>
+            <h2 className="text text_type_main-medium mb-3">{`Order ${currentOrder.number} created  ${new Date(
+              currentOrder.createdAt
+            ).toLocaleString("en-GB")}`}</h2>
             <p
               className="text text_type_main-default mb-15"
               style={{ color: currentOrder.status === "done" ? "#0cc" : "" }}>
               {currentOrder.status === "done" ? "Ready" : "In progress"}
             </p>
-            <h3 className="text text_type_main-medium mb-6">Состав:</h3>
+            <h3 className="text text_type_main-medium mb-6">Contents:</h3>
             <div className={styles.ingredients_container}>
               {currentOrder.ingredients
                 .reduce((unique: string[], item: string) => {
